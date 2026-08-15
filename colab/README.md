@@ -17,6 +17,10 @@ After it passes, `run_remote_daf_ablation.py` compares the original Restormer,
 DAF-Restormer without synthetic degradation, and the complete DAF-Restormer at
 the same 10-epoch/full-data budget.
 
+`run_remote_daf_fidelity.py` is the follow-up isolation run: it keeps the DAF
+architecture but restores the original Restormer loss and disables synthetic
+augmentation. This separates architecture gains from objective trade-offs.
+
 The smoke profile uses 128 training and 64 validation samples for one epoch.
 The full fixed-budget profile uses all 2,880 training and 320 validation samples
 for three epochs per model. Neither should be presented as fully converged
