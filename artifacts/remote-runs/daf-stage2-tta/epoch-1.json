@@ -1,0 +1,61 @@
+{
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-perceptual-stage2/epoch-1.pt",
+  "device": "cuda",
+  "device_name": "Tesla T4",
+  "variants": {
+    "x1": {
+      "samples": 320,
+      "psnr_mean_db": 28.372170320153238,
+      "psnr_median_db": 28.575531005859375,
+      "psnr_worst_decile_db": 22.229827308654784,
+      "ssim_mean": 0.7680313173681498,
+      "lpips_mean": 0.22170133497565986,
+      "validation_wall_seconds": 9.750349050000295,
+      "validation_images_per_second": 32.81933788821543,
+      "latency_median_ms_batch1": 35.79644966125488,
+      "latency_p90_ms_batch1": 50.343963623046875,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.0,
+        "ssim_mean": 0.0,
+        "lpips_mean": 0.0
+      }
+    },
+    "x4": {
+      "samples": 320,
+      "psnr_mean_db": 28.460191813111305,
+      "psnr_median_db": 28.647048950195312,
+      "psnr_worst_decile_db": 22.290835189819337,
+      "ssim_mean": 0.7708027520217001,
+      "lpips_mean": 0.22750775951426477,
+      "validation_wall_seconds": 18.205914036000195,
+      "validation_images_per_second": 17.57670608392609,
+      "latency_median_ms_batch1": 129.03504180908203,
+      "latency_p90_ms_batch1": 144.54980926513673,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.08802149295806672,
+        "ssim_mean": 0.002771434653550342,
+        "lpips_mean": 0.005806424538604915
+      }
+    },
+    "x8": {
+      "samples": 320,
+      "psnr_mean_db": 28.471262151002882,
+      "psnr_median_db": 28.652639389038086,
+      "psnr_worst_decile_db": 22.30127830505371,
+      "ssim_mean": 0.7711622648406774,
+      "lpips_mean": 0.22848921299446373,
+      "validation_wall_seconds": 37.24026760200013,
+      "validation_images_per_second": 8.592849101406918,
+      "latency_median_ms_batch1": 264.72344970703125,
+      "latency_p90_ms_batch1": 343.2351287841797,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.09909183084964468,
+        "ssim_mean": 0.003130947472527623,
+        "lpips_mean": 0.006787878018803872
+      }
+    }
+  }
+}

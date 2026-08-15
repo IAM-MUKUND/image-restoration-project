@@ -1,0 +1,61 @@
+{
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-fidelity-10ep/daf_restormer/checkpoints/best.pt",
+  "device": "cuda",
+  "device_name": "Tesla T4",
+  "variants": {
+    "x1": {
+      "samples": 320,
+      "psnr_mean_db": 28.439328840374948,
+      "psnr_median_db": 28.68852138519287,
+      "psnr_worst_decile_db": 22.24922275543213,
+      "ssim_mean": 0.7683477082289756,
+      "lpips_mean": 0.2783247296698391,
+      "validation_wall_seconds": 8.556974623000087,
+      "validation_images_per_second": 37.39639464862729,
+      "latency_median_ms_batch1": 31.640015602111816,
+      "latency_p90_ms_batch1": 33.457770919799806,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.0,
+        "ssim_mean": 0.0,
+        "lpips_mean": 0.0
+      }
+    },
+    "x4": {
+      "samples": 320,
+      "psnr_mean_db": 28.511845377087592,
+      "psnr_median_db": 28.75087833404541,
+      "psnr_worst_decile_db": 22.292416954040526,
+      "ssim_mean": 0.7705749987624586,
+      "lpips_mean": 0.2849807508289814,
+      "validation_wall_seconds": 18.285072291999995,
+      "validation_images_per_second": 17.50061442961891,
+      "latency_median_ms_batch1": 137.01500701904297,
+      "latency_p90_ms_batch1": 191.11002197265626,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.07251653671264435,
+        "ssim_mean": 0.0022272905334830284,
+        "lpips_mean": 0.006656021159142267
+      }
+    },
+    "x8": {
+      "samples": 320,
+      "psnr_mean_db": 28.521756660938262,
+      "psnr_median_db": 28.75369167327881,
+      "psnr_worst_decile_db": 22.302496910095215,
+      "ssim_mean": 0.7708906335290522,
+      "lpips_mean": 0.2863529233378358,
+      "validation_wall_seconds": 37.20751089200007,
+      "validation_images_per_second": 8.600414065021551,
+      "latency_median_ms_batch1": 249.90575408935547,
+      "latency_p90_ms_batch1": 260.35741271972654,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.08242782056331421,
+        "ssim_mean": 0.002542925300076604,
+        "lpips_mean": 0.008028193667996675
+      }
+    }
+  }
+}

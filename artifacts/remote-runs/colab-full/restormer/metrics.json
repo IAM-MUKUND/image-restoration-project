@@ -1,0 +1,47 @@
+{
+  "status": "completed",
+  "model": "restormer",
+  "notes": "Compact two-level Restormer adaptation with a late 2x head.",
+  "parameters": 1608757,
+  "checkpoint": "/content/image-restoration-project/artifacts/colab-full/restormer/checkpoints/best.pt",
+  "checkpoint_bytes": 6481250,
+  "best_epoch": 3,
+  "training_seconds": 210.76622961199996,
+  "peak_vram_mib": 2323.75537109375,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.08703777011897829,
+      "learning_rate": 0.00015000000000000001,
+      "val_psnr_mean_db": 26.106692177057266,
+      "val_ssim_mean": 0.6496712028514594
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.07893106559705403,
+      "learning_rate": 5.000000000000003e-05,
+      "val_psnr_mean_db": 26.50476016998291,
+      "val_ssim_mean": 0.6741795676294714
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.07631437406978674,
+      "learning_rate": 0.0,
+      "val_psnr_mean_db": 26.614323562383653,
+      "val_ssim_mean": 0.6778135016560555
+    }
+  ],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 26.614323562383653,
+    "psnr_median_db": 26.73632049560547,
+    "psnr_worst_decile_db": 21.5678352355957,
+    "ssim_mean": 0.6778135016560555,
+    "lpips_mean": 0.3334394430741668,
+    "validation_wall_seconds": 2.6016070979999313,
+    "validation_images_per_second": 123.00089442637601
+  },
+  "latency_median_ms_batch1": 17.292543411254883,
+  "latency_p90_ms_batch1": 20.910010337829593,
+  "latency_iterations": 100
+}
