@@ -266,15 +266,17 @@ def train_one_model(
                 if hasattr(model, "forward_with_aux"):
                     outputs = model.forward_with_aux(noisy)
                     prediction = outputs["prediction"]
-                    loss = criterion(
-                        prediction,
-                        target,
-                        clean_lr=outputs.get("clean_lr"),
-                        uncertainty=outputs.get("uncertainty"),
-                    )
                 else:
+                    outputs = None
                     prediction = model(noisy)
-                    loss = criterion(prediction, target)
+            # FFT and fixed Sobel kernels are evaluated in float32 outside AMP.
+            # This also avoids CUDA dtype mismatches for functional convolutions.
+            loss = criterion(
+                prediction.float(),
+                target.float(),
+                clean_lr=outputs.get("clean_lr").float() if outputs is not None else None,
+                uncertainty=outputs.get("uncertainty").float() if outputs is not None else None,
+            )
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
