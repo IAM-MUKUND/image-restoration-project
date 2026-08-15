@@ -1,0 +1,8 @@
+model: mprnet
+adapter: compact_progressive_joint_2x
+input_channels: 1
+output_channels: 1
+features: 32
+stages: 3
+blocks_per_stage: 4
+upscale: 2

@@ -1,0 +1,9 @@
+model: esrgan_rrdb
+adapter: rrdb_generator_fidelity_mode
+input_channels: 1
+output_channels: 1
+features: 32
+growth_channels: 16
+rrdb_blocks: 6
+upscale: 2
+adversarial_training: false

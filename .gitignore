@@ -17,9 +17,13 @@ ENV/
 # Datasets & Large Arrays (Numpy / Images)
 *.npy
 *.npz
+*.zip
 train/
 Test_NoisyLR/
 Dataset_explorations/
+hackathon/**/dataset/extracted/
+hackathon/**/dataset/*.zip
+hackathon/**/tmp/
 
 # Model Checkpoints & Weights
 checkpoints/
@@ -30,6 +34,17 @@ checkpoints/
 *.safetensors
 *.bin
 *.engine
+
+# Keep the five compact final Colab checkpoints in Git LFS.
+!artifacts/remote-runs/colab-full/*/checkpoints/
+!artifacts/remote-runs/colab-full/*/checkpoints/best.pt
+
+# Colab transfer bundles and remote scratch
+*.tar.gz
+colab-transfer/
+artifacts/colab-full-progress.json
+artifacts/local-smoke*/
+artifacts/remote-runs/colab-smoke/
 
 # Outputs & Logs
 logs/

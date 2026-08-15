@@ -1,0 +1,10 @@
+model: swinir
+adapter: compact_joint_2x
+input_channels: 1
+output_channels: 1
+dimension: 48
+residual_groups: 3
+blocks_per_group: 4
+heads: 4
+window_size: 8
+upscale: 2

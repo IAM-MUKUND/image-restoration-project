@@ -1,0 +1,47 @@
+{
+  "status": "completed",
+  "model": "swinir",
+  "notes": "Compact shifted-window SwinIR adaptation for joint denoising and 2x SR.",
+  "parameters": 405505,
+  "checkpoint": "/content/image-restoration-project/artifacts/colab-full/swinir/checkpoints/best.pt",
+  "checkpoint_bytes": 1672603,
+  "best_epoch": 3,
+  "training_seconds": 446.7922989089999,
+  "peak_vram_mib": 4664.5625,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.09095737526400222,
+      "learning_rate": 0.00015000000000000001,
+      "val_psnr_mean_db": 25.50070739686489,
+      "val_ssim_mean": 0.6039687321987003
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.08228432120134434,
+      "learning_rate": 5.000000000000003e-05,
+      "val_psnr_mean_db": 26.0883280813694,
+      "val_ssim_mean": 0.6424007559195161
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.07929493247841796,
+      "learning_rate": 0.0,
+      "val_psnr_mean_db": 26.37682024240494,
+      "val_ssim_mean": 0.6587890987284482
+    }
+  ],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 26.37682024240494,
+    "psnr_median_db": 26.634026527404785,
+    "psnr_worst_decile_db": 21.426271057128908,
+    "ssim_mean": 0.6587890987284482,
+    "lpips_mean": 0.36412297321949155,
+    "validation_wall_seconds": 7.230616874000134,
+    "validation_images_per_second": 44.25625165546478
+  },
+  "latency_median_ms_batch1": 21.5644474029541,
+  "latency_p90_ms_batch1": 21.776735305786133,
+  "latency_iterations": 100
+}

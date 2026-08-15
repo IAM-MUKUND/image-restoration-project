@@ -72,9 +72,9 @@ class NAFNetSR(nn.Module):
         in_channels: int = 1,
         out_channels: int = 1,
         width: int = 32,
-        enc_blocks: list = [2, 2],
+        enc_blocks: tuple[int, ...] = (2, 2),
         middle_blocks: int = 4,
-        dec_blocks: list = [2, 2],
+        dec_blocks: tuple[int, ...] = (2, 2),
         upscale: int = 2
     ):
         super().__init__()
@@ -113,6 +113,7 @@ class NAFNetSR(nn.Module):
         self.ending = nn.Conv2d(curr_width, out_channels, 3, padding=1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        base = F.interpolate(x, scale_factor=self.upscale, mode="bicubic", align_corners=False)
         feats = self.intro(x)
         skips = []
         for encoder, down in zip(self.encoders, self.downs):
@@ -129,4 +130,4 @@ class NAFNetSR(nn.Module):
 
         feats = self.sr_upsample(feats)
         out = self.ending(feats)
-        return out
+        return out + base

@@ -1,0 +1,8 @@
+model: restormer
+adapter: compact_joint_2x
+input_channels: 1
+output_channels: 1
+dimension: 32
+blocks_per_level: [2, 2, 4]
+heads: [1, 2, 4]
+upscale: 2

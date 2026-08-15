@@ -1,0 +1,289 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/colab-full",
+    "epochs": 3,
+    "batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": null,
+    "val_limit": null,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.0,
+    "amp": true,
+    "compute_lpips": true
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "bicubic": {
+      "status": "completed",
+      "model": "bicubic",
+      "notes": "Non-learning interpolation floor.",
+      "parameters": 0,
+      "checkpoint": null,
+      "checkpoint_bytes": 0,
+      "best_epoch": null,
+      "training_seconds": 0.0,
+      "peak_vram_mib": 0.0,
+      "history": [],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 23.278916916251184,
+        "psnr_median_db": 22.86436176300049,
+        "psnr_worst_decile_db": 19.422074127197266,
+        "ssim_mean": 0.5442567527294159,
+        "lpips_mean": 0.4312412243103608,
+        "validation_wall_seconds": 1.158644071000026,
+        "validation_images_per_second": 276.184902688716
+      },
+      "latency_median_ms_batch1": 0.12774400413036346,
+      "latency_p90_ms_batch1": 0.13376320451498033,
+      "latency_iterations": 100
+    },
+    "nafnet": {
+      "status": "completed",
+      "model": "nafnet",
+      "notes": "Compact NAFNet with a late 2x PixelShuffle head and bicubic residual.",
+      "parameters": 253057,
+      "checkpoint": "/content/image-restoration-project/artifacts/colab-full/nafnet/checkpoints/best.pt",
+      "checkpoint_bytes": 1053425,
+      "best_epoch": 3,
+      "training_seconds": 130.780425166,
+      "peak_vram_mib": 1318.97314453125,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.0929188441278206,
+          "learning_rate": 0.00015000000000000001,
+          "val_psnr_mean_db": 25.60827057957649,
+          "val_ssim_mean": 0.6288703737780452
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.08434535653019945,
+          "learning_rate": 5.000000000000003e-05,
+          "val_psnr_mean_db": 25.85935395658016,
+          "val_ssim_mean": 0.6421950944699347
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.08247740210758316,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 25.932451248168945,
+          "val_ssim_mean": 0.6467313783243298
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 25.932451248168945,
+        "psnr_median_db": 26.008352279663086,
+        "psnr_worst_decile_db": 21.215993309020995,
+        "ssim_mean": 0.6467313783243298,
+        "lpips_mean": 0.3952317293966189,
+        "validation_wall_seconds": 1.8331480389999797,
+        "validation_images_per_second": 174.56309757425083
+      },
+      "latency_median_ms_batch1": 10.039504051208496,
+      "latency_p90_ms_batch1": 12.911436843872071,
+      "latency_iterations": 100
+    },
+    "swinir": {
+      "status": "completed",
+      "model": "swinir",
+      "notes": "Compact shifted-window SwinIR adaptation for joint denoising and 2x SR.",
+      "parameters": 405505,
+      "checkpoint": "/content/image-restoration-project/artifacts/colab-full/swinir/checkpoints/best.pt",
+      "checkpoint_bytes": 1672603,
+      "best_epoch": 3,
+      "training_seconds": 446.7922989089999,
+      "peak_vram_mib": 4664.5625,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.09095737526400222,
+          "learning_rate": 0.00015000000000000001,
+          "val_psnr_mean_db": 25.50070739686489,
+          "val_ssim_mean": 0.6039687321987003
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.08228432120134434,
+          "learning_rate": 5.000000000000003e-05,
+          "val_psnr_mean_db": 26.0883280813694,
+          "val_ssim_mean": 0.6424007559195161
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.07929493247841796,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 26.37682024240494,
+          "val_ssim_mean": 0.6587890987284482
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 26.37682024240494,
+        "psnr_median_db": 26.634026527404785,
+        "psnr_worst_decile_db": 21.426271057128908,
+        "ssim_mean": 0.6587890987284482,
+        "lpips_mean": 0.36412297321949155,
+        "validation_wall_seconds": 7.230616874000134,
+        "validation_images_per_second": 44.25625165546478
+      },
+      "latency_median_ms_batch1": 21.5644474029541,
+      "latency_p90_ms_batch1": 21.776735305786133,
+      "latency_iterations": 100
+    },
+    "restormer": {
+      "status": "completed",
+      "model": "restormer",
+      "notes": "Compact two-level Restormer adaptation with a late 2x head.",
+      "parameters": 1608757,
+      "checkpoint": "/content/image-restoration-project/artifacts/colab-full/restormer/checkpoints/best.pt",
+      "checkpoint_bytes": 6481250,
+      "best_epoch": 3,
+      "training_seconds": 210.76622961199996,
+      "peak_vram_mib": 2323.75537109375,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.08703777011897829,
+          "learning_rate": 0.00015000000000000001,
+          "val_psnr_mean_db": 26.106692177057266,
+          "val_ssim_mean": 0.6496712028514594
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.07893106559705403,
+          "learning_rate": 5.000000000000003e-05,
+          "val_psnr_mean_db": 26.50476016998291,
+          "val_ssim_mean": 0.6741795676294714
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.07631437406978674,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 26.614323562383653,
+          "val_ssim_mean": 0.6778135016560555
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 26.614323562383653,
+        "psnr_median_db": 26.73632049560547,
+        "psnr_worst_decile_db": 21.5678352355957,
+        "ssim_mean": 0.6778135016560555,
+        "lpips_mean": 0.3334394430741668,
+        "validation_wall_seconds": 2.6016070979999313,
+        "validation_images_per_second": 123.00089442637601
+      },
+      "latency_median_ms_batch1": 17.292543411254883,
+      "latency_p90_ms_batch1": 20.910010337829593,
+      "latency_iterations": 100
+    },
+    "esrgan_rrdb": {
+      "status": "completed",
+      "model": "esrgan_rrdb",
+      "notes": "ESRGAN RRDB generator trained in fidelity/PSNR mode; no discriminator or GAN loss.",
+      "parameters": 1136097,
+      "checkpoint": "/content/image-restoration-project/artifacts/colab-full/esrgan_rrdb/checkpoints/best.pt",
+      "checkpoint_bytes": 4601783,
+      "best_epoch": 3,
+      "training_seconds": 274.142719081,
+      "peak_vram_mib": 1952.87646484375,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.08618555400106642,
+          "learning_rate": 0.00015000000000000001,
+          "val_psnr_mean_db": 26.26269987523556,
+          "val_ssim_mean": 0.6664380810689181
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.0789687590363125,
+          "learning_rate": 5.000000000000003e-05,
+          "val_psnr_mean_db": 26.48393135070801,
+          "val_ssim_mean": 0.6726431295275688
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.07687130177186595,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 26.514296025037766,
+          "val_ssim_mean": 0.6720977186225354
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 26.514296025037766,
+        "psnr_median_db": 26.634215354919434,
+        "psnr_worst_decile_db": 21.485003089904787,
+        "ssim_mean": 0.6720977186225354,
+        "lpips_mean": 0.33135591831523925,
+        "validation_wall_seconds": 4.0199267289999625,
+        "validation_images_per_second": 79.60344095117536
+      },
+      "latency_median_ms_batch1": 13.98422384262085,
+      "latency_p90_ms_batch1": 15.069708728790284,
+      "latency_iterations": 100
+    },
+    "mprnet": {
+      "status": "completed",
+      "model": "mprnet",
+      "notes": "Compact three-stage progressive supervised-attention adaptation at 256x256.",
+      "parameters": 265451,
+      "checkpoint": "/content/image-restoration-project/artifacts/colab-full/mprnet/checkpoints/best.pt",
+      "checkpoint_bytes": 1108145,
+      "best_epoch": 3,
+      "training_seconds": 269.17354242299984,
+      "peak_vram_mib": 1968.90576171875,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.08890224022583829,
+          "learning_rate": 0.00015000000000000001,
+          "val_psnr_mean_db": 25.3310778260231,
+          "val_ssim_mean": 0.6184329675044864
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.08481919539885388,
+          "learning_rate": 5.000000000000003e-05,
+          "val_psnr_mean_db": 25.886040729284286,
+          "val_ssim_mean": 0.6451351777650416
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.08208908431438935,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 25.954518061876296,
+          "val_ssim_mean": 0.6478186063002795
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 25.954518061876296,
+        "psnr_median_db": 25.87456703186035,
+        "psnr_worst_decile_db": 21.2670618057251,
+        "ssim_mean": 0.6478186063002795,
+        "lpips_mean": 0.3692147866822779,
+        "validation_wall_seconds": 3.7458960559999923,
+        "validation_images_per_second": 85.42682317290671
+      },
+      "latency_median_ms_batch1": 11.05577564239502,
+      "latency_p90_ms_batch1": 11.091741180419922,
+      "latency_iterations": 100
+    }
+  }
+}
