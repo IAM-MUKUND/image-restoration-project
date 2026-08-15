@@ -40,6 +40,9 @@ checkpoints/
 !artifacts/remote-runs/*/*/checkpoints/best.pt
 !artifacts/remote-runs/daf-final-submission/checkpoints/
 !artifacts/remote-runs/daf-final-submission/checkpoints/*.pt
+!artifacts/remote-runs/daf-final-submission/predictions/
+!artifacts/remote-runs/daf-final-submission/predictions/*.npy
+!artifacts/remote-runs/daf-final-submission/predictions/inference-summary.json
 
 # Colab transfer bundles and remote scratch
 *.tar.gz

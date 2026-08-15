@@ -8,6 +8,52 @@ The verified problem brief, official downloads, dataset manifest, and sample
 preview are under
 [`hackathon/semicon-image-restoration-hackathon-2026`](hackathon/semicon-image-restoration-hackathon-2026/README.md).
 
+## Clone, install, and run the submission evaluator
+
+The evaluator needs Python 3.12+, Git, and [Git LFS](https://git-lfs.com/).
+The checkpoint and the 400 submitted arrays are LFS objects, so materialize
+them before running inference.
+
+```bash
+git clone https://github.com/IAM-MUKUND/image-restoration-project.git
+cd image-restoration-project
+git lfs install
+git lfs pull
+python -m venv .venv
+```
+
+Activate the environment and install the fully pinned dependency lock:
+
+```bash
+# Linux / macOS
+source .venv/bin/activate
+
+# Windows PowerShell (use this instead of the line above)
+# .\.venv\Scripts\Activate.ps1
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Run the standalone KLA evaluator with exactly the required input and output
+directory arguments:
+
+```bash
+python infer.py --input /path/to/Test_NoisyLR --output /path/to/restored_test
+```
+
+`infer.py` automatically loads the selected checkpoint and uses the verified
+eight-view accuracy mode. It preserves every `.npy` filename and writes a
+`float32` array of shape `[256, 256]` for every `[128, 128]` grayscale input.
+Use `--self-ensemble 1` only when latency matters more than leaderboard
+accuracy. An optional `--weights` argument can evaluate another compatible
+checkpoint.
+
+Submission-ready outputs generated from all 400 official test inputs are in
+[`artifacts/remote-runs/daf-final-submission/predictions`](artifacts/remote-runs/daf-final-submission/predictions/),
+with validation evidence in
+[`INFERENCE-VALIDATION.json`](artifacts/remote-runs/daf-final-submission/INFERENCE-VALIDATION.json).
+
 ## Benchmark matrix
 
 All trainable models use the same seed, 2,880/320 split, augmentation policy,
@@ -111,7 +157,9 @@ competition models.
 
 ## Data
 
-Raw arrays and ZIP files are intentionally ignored by Git. The local dataset is:
+Raw training arrays, official input archives, and ZIP files are intentionally
+ignored by Git. The already-restored 400-image submission folder is tracked via
+Git LFS. A local extracted dataset has this layout:
 
 ```text
 hackathon/semicon-image-restoration-hackathon-2026/dataset/extracted/
@@ -159,22 +207,51 @@ artifacts/benchmark/<model>/
 ```
 
 `artifacts/benchmark/benchmark_summary.json` is updated after every model, so a
-partial run remains auditable. Model weights are stored locally but ignored by
-Git; metrics and configuration files remain trackable.
+partial run remains auditable. Intermediate model weights remain local. The
+selected final checkpoint is tracked in Git LFS together with its metrics and
+checksum evidence.
 
 ## Standalone inference
 
 ```bash
 python infer.py \
   --input hackathon/semicon-image-restoration-hackathon-2026/dataset/extracted/NoisyLR \
-  --output outputs/restored_test \
-  --weights artifacts/remote-runs/daf-final-submission/checkpoints/daf-restormer-perceptual-epoch1.pt \
-  --self-ensemble 8
+  --output outputs/restored_test
 ```
 
-The command automatically loads the architecture recorded in the checkpoint
-and writes one restored 256x256 `float32` `.npy` file per input. Set
+The command automatically loads the selected checkpoint and architecture, then
+writes one restored 256x256 `float32` `.npy` file per input. Set
 `--self-ensemble 1` for direct low-latency inference or `4` for a middle ground.
+
+## Reproduce training
+
+The required training entry point is `train.py`. With the official training
+data extracted as documented in the problem-brief folder, reproduce the core
+DAF-Restormer run with:
+
+```bash
+python train.py \
+  --model daf_restormer \
+  --data-root hackathon/semicon-image-restoration-hackathon-2026/dataset/extracted/train \
+  --output-dir artifacts/reproduction/daf-restormer \
+  --epochs 10 \
+  --batch-size 8
+```
+
+The accuracy checkpoint was then refined with
+[`scripts/finetune_daf_perceptual.py`](scripts/finetune_daf_perceptual.py); the
+exact selection recipe and evidence are recorded in the final
+[`MODEL-CARD.md`](artifacts/remote-runs/daf-final-submission/MODEL-CARD.md).
+
+## Rebuild the dependency lock
+
+`requirements.txt` is a resolver-generated, transitive and platform-aware lock
+for Python 3.12. When changing a direct dependency in `requirements.in`, rebuild
+it with:
+
+```bash
+uv pip compile requirements.in --python-version 3.12 --universal --no-header --output-file requirements.txt
+```
 
 ## Metrics
 

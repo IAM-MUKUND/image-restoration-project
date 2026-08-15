@@ -9,18 +9,34 @@ from pathlib import Path
 from engine.inference import restore_directory
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+DEFAULT_WEIGHTS = (
+    PROJECT_ROOT
+    / "artifacts"
+    / "remote-runs"
+    / "daf-final-submission"
+    / "checkpoints"
+    / "daf-restormer-perceptual-epoch1.pt"
+)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Restore all KLA .npy inputs in a directory")
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--weights", type=Path, required=True)
+    parser.add_argument(
+        "--weights",
+        type=Path,
+        default=DEFAULT_WEIGHTS,
+        help=f"Checkpoint path (default: {DEFAULT_WEIGHTS.relative_to(PROJECT_ROOT)})",
+    )
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument(
         "--self-ensemble",
         type=int,
         choices=(1, 4, 8),
-        default=1,
-        help="Geometric prediction views to average (1 disables self-ensemble)",
+        default=8,
+        help="Geometric prediction views to average (default: 8; use 1 for low latency)",
     )
     args = parser.parse_args()
     print(
