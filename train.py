@@ -21,6 +21,7 @@ def main() -> None:
     parser.add_argument("--gradient-weight", type=float, default=0.0)
     parser.add_argument("--auxiliary-weight", type=float, default=0.2)
     parser.add_argument("--uncertainty-weight", type=float, default=0.01)
+    parser.add_argument("--perceptual-weight", type=float, default=0.0)
     parser.add_argument("--synthetic-probability", type=float, default=0.0)
     args = parser.parse_args()
     settings = BenchmarkSettings(
@@ -34,6 +35,7 @@ def main() -> None:
         gradient_loss_weight=args.gradient_weight,
         auxiliary_loss_weight=args.auxiliary_weight,
         uncertainty_loss_weight=args.uncertainty_weight,
+        perceptual_loss_weight=args.perceptual_weight,
         synthetic_degradation_probability=args.synthetic_probability,
     )
     run_benchmarks([args.model], settings)

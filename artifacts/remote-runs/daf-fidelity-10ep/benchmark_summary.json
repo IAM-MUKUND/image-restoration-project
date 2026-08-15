@@ -1,0 +1,129 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/daf-fidelity-10ep",
+    "epochs": 10,
+    "batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": null,
+    "val_limit": null,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.0,
+    "gradient_loss_weight": 0.0,
+    "auxiliary_loss_weight": 0.0,
+    "uncertainty_loss_weight": 0.0,
+    "synthetic_degradation_probability": 0.0,
+    "amp": true,
+    "compute_lpips": true
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "daf_restormer": {
+      "status": "completed",
+      "model": "daf_restormer",
+      "notes": "Degradation-aware frequency Restormer with prompt modulation, spatial noise mapping, progressive clean-LR supervision, and uncertainty estimation.",
+      "parameters": 4172518,
+      "checkpoint": "/content/image-restoration-project/artifacts/daf-fidelity-10ep/daf_restormer/checkpoints/best.pt",
+      "checkpoint_bytes": 16810608,
+      "best_epoch": 10,
+      "training_seconds": 1425.73506731,
+      "peak_vram_mib": 5022.32861328125,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.07660101413105926,
+          "learning_rate": 0.00019510565162951537,
+          "val_psnr_mean_db": 27.095718869566916,
+          "val_ssim_mean": 0.7104185132775456
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.06341186359317766,
+          "learning_rate": 0.00018090169943749473,
+          "val_psnr_mean_db": 27.576447838544844,
+          "val_ssim_mean": 0.7419155997224152
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.06079102587989635,
+          "learning_rate": 0.00015877852522924732,
+          "val_psnr_mean_db": 27.880560600757597,
+          "val_ssim_mean": 0.7492250453680753
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.0592646218991528,
+          "learning_rate": 0.00013090169943749474,
+          "val_psnr_mean_db": 28.05339943468571,
+          "val_ssim_mean": 0.7546401468571275
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.05790264288791352,
+          "learning_rate": 9.999999999999999e-05,
+          "val_psnr_mean_db": 28.118279337882996,
+          "val_ssim_mean": 0.7586294684559107
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.05713664954528212,
+          "learning_rate": 6.909830056250526e-05,
+          "val_psnr_mean_db": 28.28876473605633,
+          "val_ssim_mean": 0.7636849032714963
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.05652052353446682,
+          "learning_rate": 4.122147477075269e-05,
+          "val_psnr_mean_db": 28.3616075694561,
+          "val_ssim_mean": 0.7658604148309678
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.05612334113361107,
+          "learning_rate": 1.9098300562505263e-05,
+          "val_psnr_mean_db": 28.377294194698333,
+          "val_ssim_mean": 0.765622470388189
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.055876048333528966,
+          "learning_rate": 4.894348370484646e-06,
+          "val_psnr_mean_db": 28.42026966512203,
+          "val_ssim_mean": 0.7668041992001235
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.05573917175125745,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 28.439328840374948,
+          "val_ssim_mean": 0.7683477082289756
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 28.439328840374948,
+        "psnr_median_db": 28.68852138519287,
+        "psnr_worst_decile_db": 22.24922275543213,
+        "ssim_mean": 0.7683477082289756,
+        "lpips_mean": 0.2783247296698391,
+        "validation_wall_seconds": 5.120692061999989,
+        "validation_images_per_second": 62.4915531192902
+      },
+      "latency_median_ms_batch1": 31.985679626464844,
+      "latency_p90_ms_batch1": 36.318566513061526,
+      "latency_iterations": 100
+    }
+  }
+}

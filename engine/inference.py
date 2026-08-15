@@ -8,6 +8,7 @@ import numpy as np
 import torch
 
 from models import build_model
+from models.self_ensemble import GeometricSelfEnsemble
 
 
 @torch.inference_mode()
@@ -16,12 +17,14 @@ def restore_directory(
     output_dir: Path,
     weights: Path,
     batch_size: int = 16,
+    self_ensemble_transforms: int = 1,
 ) -> dict[str, object]:
     checkpoint = torch.load(weights, map_location="cpu", weights_only=False)
     model_name = checkpoint["model_name"]
     model = build_model(model_name)
     model.load_state_dict(checkpoint["model_state_dict"])
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = GeometricSelfEnsemble(model, transforms=self_ensemble_transforms)
     model = model.to(device).eval()
     use_amp = device.type == "cuda"
     files = sorted(input_dir.glob("*.npy"))
@@ -48,6 +51,7 @@ def restore_directory(
         "input_dir": str(input_dir.resolve()),
         "output_dir": str(output_dir.resolve()),
         "images": len(files),
+        "self_ensemble_transforms": self_ensemble_transforms,
         "seconds": elapsed,
         "images_per_second": len(files) / elapsed,
         "device": str(device),

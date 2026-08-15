@@ -10,6 +10,7 @@ loss:
   gradient: 0.02
   auxiliary_clean_lr: 0.2
   uncertainty_calibration: 0.01
+  perceptual: 0.0
 augmentation:
   synthetic_degradation_probability: 0.35
   degradation_order: random

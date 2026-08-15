@@ -38,13 +38,18 @@ checkpoints/
 # Keep final remote checkpoints in Git LFS.
 !artifacts/remote-runs/*/*/checkpoints/
 !artifacts/remote-runs/*/*/checkpoints/best.pt
+!artifacts/remote-runs/daf-final-submission/checkpoints/
+!artifacts/remote-runs/daf-final-submission/checkpoints/*.pt
 
 # Colab transfer bundles and remote scratch
 *.tar.gz
 colab-transfer/
 artifacts/colab-full-progress.json
+artifacts/*-live*.pt
+artifacts/daf-fidelity-live*.pt
 artifacts/*local-smoke*/
 artifacts/remote-runs/colab-smoke/
+artifacts/remote-runs/daf-gpu-smoke/**/checkpoints/*.pt
 
 # Outputs & Logs
 logs/

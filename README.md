@@ -48,8 +48,38 @@ python train.py \
   --synthetic-probability 0.35
 ```
 
-The architecture is experimental until its controlled GPU comparison is saved;
-do not infer superiority from parameter count alone.
+The controlled experiments below now establish both its direct-model tradeoffs
+and its winning accuracy-mode recipe.
+
+## New accuracy winner: DAF-Restormer-P
+
+The final model is DAF-Restormer with two low-rate 128x128 perceptual
+fine-tuning epochs, one still-lower-rate full-resolution SSIM/LPIPS epoch, and
+an eight-view dihedral self-ensemble at inference. The comparison uses the
+identical 2,880/320 split, seed 42, and T4 metric implementation as the
+converged 10-epoch Restormer control.
+
+| 10-epoch candidate | PSNR dB | SSIM | LPIPS (lower) | T4 latency ms |
+|---|---:|---:|---:|---:|
+| Restormer control | 28.3931 | 0.770946 | 0.271908 | **13.66** |
+| DAF architecture, direct | 28.4393 | 0.768348 | 0.278325 | 31.99 |
+| DAF-Restormer-P, direct | 28.3722 | 0.768031 | **0.221701** | 35.80 |
+| **DAF-Restormer-P, 8-view accuracy mode** | **28.4713** | **0.771162** | 0.228489 | 264.72 |
+
+The selected recipe improves PSNR by 0.0782 dB and SSIM by 0.000216 while
+reducing LPIPS by 16.0% relative to Restormer. It is an accuracy-first entry;
+the direct checkpoint remains available when latency matters. Synthetic mixed
+degradation, residual calibration, and the first downsampled-perceptual recipe
+were retained as negative or tradeoff ablations instead of being presented as
+wins.
+
+- [Final model card](artifacts/remote-runs/daf-final-submission/MODEL-CARD.md)
+- [Selected checkpoint](artifacts/remote-runs/daf-final-submission/checkpoints/daf-restormer-perceptual-epoch1.pt)
+- [Selection metrics](artifacts/remote-runs/daf-final-submission/SELECTION.json)
+- [400-image validation](artifacts/remote-runs/daf-final-submission/INFERENCE-VALIDATION.json)
+- [Full TTA evidence](artifacts/remote-runs/daf-stage2-tta/epoch-1.json)
+
+![DAF accuracy-mode test preview](artifacts/remote-runs/daf-final-submission/preview.png)
 
 ## T4 benchmark result
 
@@ -138,11 +168,13 @@ Git; metrics and configuration files remain trackable.
 python infer.py \
   --input hackathon/semicon-image-restoration-hackathon-2026/dataset/extracted/NoisyLR \
   --output outputs/restored_test \
-  --weights artifacts/remote-runs/colab-full/restormer/checkpoints/best.pt
+  --weights artifacts/remote-runs/daf-final-submission/checkpoints/daf-restormer-perceptual-epoch1.pt \
+  --self-ensemble 8
 ```
 
 The command automatically loads the architecture recorded in the checkpoint
-and writes one restored 256x256 `float32` `.npy` file per input.
+and writes one restored 256x256 `float32` `.npy` file per input. Set
+`--self-ensemble 1` for direct low-latency inference or `4` for a middle ground.
 
 ## Metrics
 

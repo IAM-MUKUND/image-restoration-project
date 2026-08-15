@@ -18,6 +18,8 @@ class CombinedRestorationLoss(nn.Module):
         gradient_weight: float = 0.0,
         auxiliary_weight: float = 0.0,
         uncertainty_weight: float = 0.0,
+        perceptual_weight: float = 0.0,
+        perceptual_max_size: int = 128,
     ):
         super().__init__()
         self.ssim_weight = ssim_weight
@@ -25,10 +27,17 @@ class CombinedRestorationLoss(nn.Module):
         self.gradient_weight = gradient_weight
         self.auxiliary_weight = auxiliary_weight
         self.uncertainty_weight = uncertainty_weight
+        self.perceptual_weight = perceptual_weight
         self.charbonnier = CharbonnierLoss()
         self.ssim = SSIMLoss()
         self.frequency = FrequencyLoss()
         self.gradient = GradientLoss()
+        if perceptual_weight:
+            from .perceptual import PerceptualLoss
+
+            self.perceptual = PerceptualLoss(max_size=perceptual_max_size)
+        else:
+            self.perceptual = None
 
     def forward(
         self,
@@ -54,4 +63,6 @@ class CombinedRestorationLoss(nn.Module):
             loss = loss + self.uncertainty_weight * F.smooth_l1_loss(
                 uncertainty.float(), error_target
             )
+        if self.perceptual is not None:
+            loss = loss + self.perceptual_weight * self.perceptual(prediction, target)
         return loss

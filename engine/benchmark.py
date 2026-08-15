@@ -58,6 +58,7 @@ class BenchmarkSettings:
     gradient_loss_weight: float = 0.0
     auxiliary_loss_weight: float = 0.2
     uncertainty_loss_weight: float = 0.01
+    perceptual_loss_weight: float = 0.0
     synthetic_degradation_probability: float = 0.0
     amp: bool = True
     compute_lpips: bool = True
@@ -238,6 +239,7 @@ def train_one_model(
         gradient_weight=settings.gradient_loss_weight,
         auxiliary_weight=settings.auxiliary_loss_weight,
         uncertainty_weight=settings.uncertainty_loss_weight,
+        perceptual_weight=settings.perceptual_loss_weight,
     ).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=settings.learning_rate, weight_decay=settings.weight_decay

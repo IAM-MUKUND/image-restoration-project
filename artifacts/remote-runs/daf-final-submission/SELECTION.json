@@ -1,0 +1,17 @@
+{
+  "mode": "accuracy",
+  "model": "daf_restormer",
+  "self_ensemble_transforms": 8,
+  "validation_samples": 320,
+  "selected": {
+    "psnr_mean_db": 28.471262151002882,
+    "ssim_mean": 0.7711622648406774,
+    "lpips_mean": 0.22848921299446373
+  },
+  "restormer_reference": {
+    "psnr_mean_db": 28.393100327253343,
+    "ssim_mean": 0.7709464966785162,
+    "lpips_mean": 0.27190778822405265
+  },
+  "t4_latency_median_ms_batch1": 264.72344970703125
+}

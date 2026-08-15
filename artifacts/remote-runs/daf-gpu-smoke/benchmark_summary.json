@@ -1,0 +1,66 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/daf-gpu-smoke",
+    "epochs": 1,
+    "batch_size": 4,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": 256,
+    "val_limit": 64,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.03,
+    "gradient_loss_weight": 0.02,
+    "auxiliary_loss_weight": 0.2,
+    "uncertainty_loss_weight": 0.01,
+    "synthetic_degradation_probability": 0.35,
+    "amp": true,
+    "compute_lpips": false
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "daf_restormer": {
+      "status": "completed",
+      "model": "daf_restormer",
+      "notes": "Degradation-aware frequency Restormer with prompt modulation, spatial noise mapping, progressive clean-LR supervision, and uncertainty estimation.",
+      "parameters": 4172518,
+      "checkpoint": "/content/image-restoration-project/artifacts/daf-gpu-smoke/daf_restormer/checkpoints/best.pt",
+      "checkpoint_bytes": 16810608,
+      "best_epoch": 1,
+      "training_seconds": 27.796244193000007,
+      "peak_vram_mib": 2528.86962890625,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.1225027545588091,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 22.71888394653797,
+          "val_ssim_mean": 0.5376486561726779
+        }
+      ],
+      "metrics": {
+        "samples": 64,
+        "psnr_mean_db": 22.71888394653797,
+        "psnr_median_db": 23.072131156921387,
+        "psnr_worst_decile_db": 19.214122009277343,
+        "ssim_mean": 0.5376486561726779,
+        "lpips_mean": null,
+        "validation_wall_seconds": 0.9763015569999993,
+        "validation_images_per_second": 65.55351626874446
+      },
+      "latency_median_ms_batch1": 31.10558319091797,
+      "latency_p90_ms_batch1": 34.412574768066406,
+      "latency_iterations": 100
+    }
+  }
+}

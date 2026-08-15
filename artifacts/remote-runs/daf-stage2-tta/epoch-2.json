@@ -1,0 +1,61 @@
+{
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-perceptual-stage2/epoch-2.pt",
+  "device": "cuda",
+  "device_name": "Tesla T4",
+  "variants": {
+    "x1": {
+      "samples": 320,
+      "psnr_mean_db": 28.346613758802413,
+      "psnr_median_db": 28.53746223449707,
+      "psnr_worst_decile_db": 22.232364845275878,
+      "ssim_mean": 0.7676062108948827,
+      "lpips_mean": 0.21217314050300046,
+      "validation_wall_seconds": 8.95492113499995,
+      "validation_images_per_second": 35.734541396382916,
+      "latency_median_ms_batch1": 32.61662483215332,
+      "latency_p90_ms_batch1": 34.323651504516604,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.0,
+        "ssim_mean": 0.0,
+        "lpips_mean": 0.0
+      }
+    },
+    "x4": {
+      "samples": 320,
+      "psnr_mean_db": 28.436507880687714,
+      "psnr_median_db": 28.620747566223145,
+      "psnr_worst_decile_db": 22.29398956298828,
+      "ssim_mean": 0.7705166725907475,
+      "lpips_mean": 0.2173874962492846,
+      "validation_wall_seconds": 18.448237726000116,
+      "validation_images_per_second": 17.345830249629014,
+      "latency_median_ms_batch1": 137.1445770263672,
+      "latency_p90_ms_batch1": 184.26984558105468,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.0898941218853011,
+        "ssim_mean": 0.002910461695864841,
+        "lpips_mean": 0.0052143557462841494
+      }
+    },
+    "x8": {
+      "samples": 320,
+      "psnr_mean_db": 28.447917234897613,
+      "psnr_median_db": 28.63808536529541,
+      "psnr_worst_decile_db": 22.30463275909424,
+      "ssim_mean": 0.77089595166035,
+      "lpips_mean": 0.2182454756111838,
+      "validation_wall_seconds": 37.1618693180003,
+      "validation_images_per_second": 8.610976946872794,
+      "latency_median_ms_batch1": 261.075439453125,
+      "latency_p90_ms_batch1": 277.6673278808594,
+      "latency_iterations": 30,
+      "delta_vs_x1": {
+        "psnr_mean_db": 0.1013034760952003,
+        "ssim_mean": 0.003289740765467286,
+        "lpips_mean": 0.0060723351081833354
+      }
+    }
+  }
+}

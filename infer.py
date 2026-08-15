@@ -15,8 +15,26 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--weights", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument(
+        "--self-ensemble",
+        type=int,
+        choices=(1, 4, 8),
+        default=1,
+        help="Geometric prediction views to average (1 disables self-ensemble)",
+    )
     args = parser.parse_args()
-    print(json.dumps(restore_directory(args.input, args.output, args.weights, args.batch_size), indent=2))
+    print(
+        json.dumps(
+            restore_directory(
+                args.input,
+                args.output,
+                args.weights,
+                args.batch_size,
+                self_ensemble_transforms=args.self_ensemble,
+            ),
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
