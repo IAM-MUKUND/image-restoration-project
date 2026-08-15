@@ -30,7 +30,7 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/benchmark"))
     parser.add_argument(
         "--models",
-        default="bicubic,nafnet,swinir,restormer,esrgan_rrdb,mprnet",
+        default="bicubic,nafnet,swinir,restormer,esrgan_rrdb,mprnet,daf_restormer",
         help="Comma-separated model names",
     )
     parser.add_argument("--epochs", type=int, default=3)
@@ -42,6 +42,10 @@ def main() -> None:
     parser.add_argument("--val-limit", type=int, default=0)
     parser.add_argument("--ssim-weight", type=float, default=0.1)
     parser.add_argument("--frequency-weight", type=float, default=0.0)
+    parser.add_argument("--gradient-weight", type=float, default=0.0)
+    parser.add_argument("--auxiliary-weight", type=float, default=0.2)
+    parser.add_argument("--uncertainty-weight", type=float, default=0.01)
+    parser.add_argument("--synthetic-probability", type=float, default=0.0)
     parser.add_argument("--no-amp", action="store_true")
     parser.add_argument("--skip-lpips", action="store_true")
     args = parser.parse_args()
@@ -58,6 +62,10 @@ def main() -> None:
         val_limit=parse_optional_limit(args.val_limit),
         ssim_loss_weight=args.ssim_weight,
         frequency_loss_weight=args.frequency_weight,
+        gradient_loss_weight=args.gradient_weight,
+        auxiliary_loss_weight=args.auxiliary_weight,
+        uncertainty_loss_weight=args.uncertainty_weight,
+        synthetic_degradation_probability=args.synthetic_probability,
         amp=not args.no_amp,
         compute_lpips=not args.skip_lpips,
     )

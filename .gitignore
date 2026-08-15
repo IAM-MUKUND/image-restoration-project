@@ -35,15 +35,15 @@ checkpoints/
 *.bin
 *.engine
 
-# Keep the five compact final Colab checkpoints in Git LFS.
-!artifacts/remote-runs/colab-full/*/checkpoints/
-!artifacts/remote-runs/colab-full/*/checkpoints/best.pt
+# Keep final remote checkpoints in Git LFS.
+!artifacts/remote-runs/*/*/checkpoints/
+!artifacts/remote-runs/*/*/checkpoints/best.pt
 
 # Colab transfer bundles and remote scratch
 *.tar.gz
 colab-transfer/
 artifacts/colab-full-progress.json
-artifacts/local-smoke*/
+artifacts/*local-smoke*/
 artifacts/remote-runs/colab-smoke/
 
 # Outputs & Logs

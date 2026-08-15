@@ -34,6 +34,10 @@ MODEL_NOTES = {
     "restormer": "Compact two-level Restormer adaptation with a late 2x head.",
     "esrgan_rrdb": "ESRGAN RRDB generator trained in fidelity/PSNR mode; no discriminator or GAN loss.",
     "mprnet": "Compact three-stage progressive supervised-attention adaptation at 256x256.",
+    "daf_restormer": (
+        "Degradation-aware frequency Restormer with prompt modulation, spatial noise mapping, "
+        "progressive clean-LR supervision, and uncertainty estimation."
+    ),
 }
 
 
@@ -51,6 +55,10 @@ class BenchmarkSettings:
     val_limit: int | None = None
     ssim_loss_weight: float = 0.1
     frequency_loss_weight: float = 0.0
+    gradient_loss_weight: float = 0.0
+    auxiliary_loss_weight: float = 0.2
+    uncertainty_loss_weight: float = 0.01
+    synthetic_degradation_probability: float = 0.0
     amp: bool = True
     compute_lpips: bool = True
 
@@ -216,6 +224,7 @@ def train_one_model(
         num_workers=settings.num_workers,
         train_limit=settings.train_limit,
         val_limit=settings.val_limit,
+        synthetic_degradation_probability=settings.synthetic_degradation_probability,
     )
     model_dir = Path(settings.output_dir) / name
     checkpoint_dir = model_dir / "checkpoints"
@@ -226,6 +235,9 @@ def train_one_model(
     criterion = CombinedRestorationLoss(
         ssim_weight=settings.ssim_loss_weight,
         frequency_weight=settings.frequency_loss_weight,
+        gradient_weight=settings.gradient_loss_weight,
+        auxiliary_weight=settings.auxiliary_loss_weight,
+        uncertainty_weight=settings.uncertainty_loss_weight,
     )
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=settings.learning_rate, weight_decay=settings.weight_decay
@@ -251,8 +263,18 @@ def train_one_model(
             target = target.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
             with torch.autocast(device_type=device.type, dtype=torch.float16, enabled=use_amp):
-                prediction = model(noisy)
-                loss = criterion(prediction, target)
+                if hasattr(model, "forward_with_aux"):
+                    outputs = model.forward_with_aux(noisy)
+                    prediction = outputs["prediction"]
+                    loss = criterion(
+                        prediction,
+                        target,
+                        clean_lr=outputs.get("clean_lr"),
+                        uncertainty=outputs.get("uncertainty"),
+                    )
+                else:
+                    prediction = model(noisy)
+                    loss = criterion(prediction, target)
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)

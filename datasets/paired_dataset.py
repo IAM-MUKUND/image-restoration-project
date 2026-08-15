@@ -6,6 +6,8 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
+from .degradations import MixedDegradationAugmentor
+
 class PairedNpyDataset(Dataset):
     """Dataset for loading paired low-resolution noisy images (NoisyLR) and high-resolution ground truth images (GT)."""
     def __init__(
@@ -14,11 +16,15 @@ class PairedNpyDataset(Dataset):
         gt_dir: str,
         augment: bool = True,
         filenames: Optional[Sequence[str]] = None,
+        synthetic_degradation_probability: float = 0.0,
     ):
         super().__init__()
         self.lr_dir = Path(lr_dir)
         self.gt_dir = Path(gt_dir)
         self.augment = augment
+        self.synthetic_degradation = MixedDegradationAugmentor(
+            synthetic_degradation_probability if augment else 0.0
+        )
 
         lr_names = {path.name for path in self.lr_dir.glob("*.npy")}
         gt_names = {path.name for path in self.gt_dir.glob("*.npy")}
@@ -81,6 +87,7 @@ class PairedNpyDataset(Dataset):
         # Add channel dimension: (H, W) -> (1, H, W)
         lr_tensor = torch.from_numpy(lr_arr).unsqueeze(0)
         gt_tensor = torch.from_numpy(gt_arr).unsqueeze(0)
+        lr_tensor = self.synthetic_degradation(gt_tensor, lr_tensor)
 
         return lr_tensor, gt_tensor, lr_path.stem
 
@@ -93,6 +100,7 @@ def get_dataloaders(
     num_workers: int = 2,
     train_limit: Optional[int] = None,
     val_limit: Optional[int] = None,
+    synthetic_degradation_probability: float = 0.0,
 ):
     """Creates train and validation dataloaders with a fixed reproducible random split."""
     all_names = sorted(path.name for path in Path(lr_dir).glob("*.npy"))
@@ -118,7 +126,13 @@ def get_dataloaders(
         val_names = val_names[:val_limit]
 
     # Separate dataset instances prevent validation settings from mutating training.
-    train_dataset = PairedNpyDataset(lr_dir, gt_dir, augment=True, filenames=train_names)
+    train_dataset = PairedNpyDataset(
+        lr_dir,
+        gt_dir,
+        augment=True,
+        filenames=train_names,
+        synthetic_degradation_probability=synthetic_degradation_probability,
+    )
     val_dataset = PairedNpyDataset(lr_dir, gt_dir, augment=False, filenames=val_names)
 
     generator = torch.Generator().manual_seed(seed)

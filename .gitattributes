@@ -1,4 +1,4 @@
-artifacts/remote-runs/colab-full/*/checkpoints/*.pt filter=lfs diff=lfs merge=lfs -text
+artifacts/remote-runs/*/*/checkpoints/*.pt filter=lfs diff=lfs merge=lfs -text
 *.pdf binary
 *.pptx binary
 *.png binary

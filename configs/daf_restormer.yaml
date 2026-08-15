@@ -1,0 +1,16 @@
+model:
+  name: daf_restormer
+  dim: 40
+  prompt_dim: 64
+  blocks_per_level: [3, 4, 6]
+loss:
+  charbonnier: 1.0
+  ssim: 0.1
+  frequency: 0.03
+  gradient: 0.02
+  auxiliary_clean_lr: 0.2
+  uncertainty_calibration: 0.01
+augmentation:
+  synthetic_degradation_probability: 0.35
+  degradation_order: random
+  preserve_out_of_range_input: true

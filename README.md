@@ -21,11 +21,35 @@ optimizer, reconstruction loss, metrics, and latency procedure.
 | `restormer` | Compact two-level Restormer plus 2x head |
 | `esrgan_rrdb` | ESRGAN RRDB generator in fidelity mode; no GAN loss |
 | `mprnet` | Compact three-stage progressive supervised-attention model |
+| `daf_restormer` | Experimental degradation-aware spatial/frequency Restormer |
 
 These are task-adapted, compute-matched variants. They are not claimed to be
 bit-for-bit copies of every official repository. In particular, adversarial
 training is intentionally disabled for the ESRGAN generator because invented
 inspection structures are unsafe and would make a PSNR/SSIM comparison unfair.
+
+### Experimental DAF-Restormer
+
+`daf_restormer` is the project-specific successor to the compact Restormer. It
+adds a learned global degradation prompt, a spatial noise-strength map,
+prompt-conditioned transformer blocks, frequency-gated bottleneck refinement,
+an auxiliary clean-128x128 head, and a calibrated uncertainty head. Its mixed
+degradation augmentation can synthesize random-order blur/downsample/speckle/
+Gaussian observations from clean targets without clipping out-of-range inputs.
+
+```bash
+python train.py \
+  --model daf_restormer \
+  --data-root hackathon/semicon-image-restoration-hackathon-2026/dataset/extracted/train \
+  --epochs 30 \
+  --batch-size 8 \
+  --frequency-weight 0.03 \
+  --gradient-weight 0.02 \
+  --synthetic-probability 0.35
+```
+
+The architecture is experimental until its controlled GPU comparison is saved;
+do not infer superiority from parameter count alone.
 
 ## T4 benchmark result
 
