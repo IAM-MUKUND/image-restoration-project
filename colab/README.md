@@ -12,6 +12,11 @@ downloaded before the VM is stopped.
 6. Execute `run_remote_full.py` and download its archive.
 7. Always stop the named session after downloading results.
 
+For the project-specific successor model, run `run_remote_daf_smoke.py` first.
+After it passes, `run_remote_daf_ablation.py` compares the original Restormer,
+DAF-Restormer without synthetic degradation, and the complete DAF-Restormer at
+the same 10-epoch/full-data budget.
+
 The smoke profile uses 128 training and 64 validation samples for one epoch.
 The full fixed-budget profile uses all 2,880 training and 320 validation samples
 for three epochs per model. Neither should be presented as fully converged
