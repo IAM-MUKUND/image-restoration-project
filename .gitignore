@@ -1,0 +1,50 @@
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# Bytecode & Caches
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Datasets & Large Arrays (Numpy / Images)
+*.npy
+*.npz
+train/
+Test_NoisyLR/
+Dataset_explorations/
+
+# Model Checkpoints & Weights
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.safetensors
+*.bin
+*.engine
+
+# Outputs & Logs
+logs/
+outputs/
+runs/
+*.log
+events.out.tfevents.*
+wandb/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Project Temporary Artifacts
+scratch/

@@ -1,0 +1,27 @@
+# Deep Learning Framework
+torch
+torchvision
+
+# Core Scientific & Data Processing
+numpy
+scipy
+pandas
+
+# Image Processing & Augmentations
+pillow
+opencv-python
+scikit-image
+albumentations
+
+# Deep Learning Utilities & Model Architectures
+timm
+einops
+pytorch-msssim
+lpips
+
+# Configuration & Logging
+PyYAML
+yacs
+tqdm
+rich
+tensorboard
