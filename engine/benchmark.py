@@ -238,7 +238,7 @@ def train_one_model(
         gradient_weight=settings.gradient_loss_weight,
         auxiliary_weight=settings.auxiliary_loss_weight,
         uncertainty_weight=settings.uncertainty_loss_weight,
-    )
+    ).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=settings.learning_rate, weight_decay=settings.weight_decay
     )
