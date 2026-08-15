@@ -1,0 +1,14 @@
+{
+  "model": "restormer",
+  "checkpoint": "artifacts/remote-runs/colab-full/restormer/checkpoints/best.pt",
+  "input_split": "official public Test_NoisyLR",
+  "inputs": 400,
+  "outputs": 400,
+  "output_shape": [256, 256],
+  "output_dtype": "float32",
+  "all_finite": true,
+  "output_range": [0.0, 1.0],
+  "device": "cpu",
+  "wall_seconds": 82.2164635000081,
+  "images_per_second": 4.865205616633712
+}

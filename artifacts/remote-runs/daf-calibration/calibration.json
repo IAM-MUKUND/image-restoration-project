@@ -1,0 +1,292 @@
+{
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-fidelity-10ep/daf_restormer/checkpoints/best.pt",
+  "transforms": 8,
+  "selection_rule": "highest PSNR with SSIM >= 0.7709464966785162",
+  "selected": {
+    "residual_gain": 1.0250000000000001,
+    "bias": 0.0,
+    "psnr_mean_db": 28.523893287777902,
+    "ssim_mean": 0.7696564286947251,
+    "met_ssim_constraint": false,
+    "lpips_mean": 0.2928121923818253
+  },
+  "latency": {
+    "latency_median_ms_batch1": 270.8651580810547,
+    "latency_p90_ms_batch1": 284.1337127685547,
+    "latency_iterations": 30
+  },
+  "surface": [
+    {
+      "residual_gain": 0.9,
+      "bias": -0.002,
+      "psnr_mean_db": 28.254148396849633,
+      "ssim_mean": 0.7581494643352926
+    },
+    {
+      "residual_gain": 0.9,
+      "bias": -0.001,
+      "psnr_mean_db": 28.27086628973484,
+      "ssim_mean": 0.7584015931468457
+    },
+    {
+      "residual_gain": 0.9,
+      "bias": 0.0,
+      "psnr_mean_db": 28.277596881985666,
+      "ssim_mean": 0.7584902459289878
+    },
+    {
+      "residual_gain": 0.9,
+      "bias": 0.001,
+      "psnr_mean_db": 28.274202436208725,
+      "ssim_mean": 0.7584271372295917
+    },
+    {
+      "residual_gain": 0.9,
+      "bias": 0.002,
+      "psnr_mean_db": 28.26074185669422,
+      "ssim_mean": 0.7582287781871855
+    },
+    {
+      "residual_gain": 0.925,
+      "bias": -0.002,
+      "psnr_mean_db": 28.34410780072212,
+      "ssim_mean": 0.7633717999327928
+    },
+    {
+      "residual_gain": 0.925,
+      "bias": -0.001,
+      "psnr_mean_db": 28.361254227161407,
+      "ssim_mean": 0.7636142036411911
+    },
+    {
+      "residual_gain": 0.925,
+      "bias": 0.0,
+      "psnr_mean_db": 28.368043729662894,
+      "ssim_mean": 0.7636921612080186
+    },
+    {
+      "residual_gain": 0.925,
+      "bias": 0.001,
+      "psnr_mean_db": 28.364326336979865,
+      "ssim_mean": 0.7636173589155077
+    },
+    {
+      "residual_gain": 0.925,
+      "bias": 0.002,
+      "psnr_mean_db": 28.350168272852898,
+      "ssim_mean": 0.7634067351464182
+    },
+    {
+      "residual_gain": 0.9500000000000001,
+      "bias": -0.002,
+      "psnr_mean_db": 28.416777276992796,
+      "ssim_mean": 0.7673926834948361
+    },
+    {
+      "residual_gain": 0.9500000000000001,
+      "bias": -0.001,
+      "psnr_mean_db": 28.43433699309826,
+      "ssim_mean": 0.7676281305029988
+    },
+    {
+      "residual_gain": 0.9500000000000001,
+      "bias": 0.0,
+      "psnr_mean_db": 28.44121101796627,
+      "ssim_mean": 0.7676982447039336
+    },
+    {
+      "residual_gain": 0.9500000000000001,
+      "bias": 0.001,
+      "psnr_mean_db": 28.437240478396415,
+      "ssim_mean": 0.7676148243248463
+    },
+    {
+      "residual_gain": 0.9500000000000001,
+      "bias": 0.002,
+      "psnr_mean_db": 28.42249688208103,
+      "ssim_mean": 0.7673949418123811
+    },
+    {
+      "residual_gain": 0.9750000000000001,
+      "bias": -0.002,
+      "psnr_mean_db": 28.468649131059646,
+      "ssim_mean": 0.7698913290165365
+    },
+    {
+      "residual_gain": 0.9750000000000001,
+      "bias": -0.001,
+      "psnr_mean_db": 28.486555168032645,
+      "ssim_mean": 0.7701229129452258
+    },
+    {
+      "residual_gain": 0.9750000000000001,
+      "bias": 0.0,
+      "psnr_mean_db": 28.493519228696822,
+      "ssim_mean": 0.7701884478796274
+    },
+    {
+      "residual_gain": 0.9750000000000001,
+      "bias": 0.001,
+      "psnr_mean_db": 28.489376291632652,
+      "ssim_mean": 0.7700998980086297
+    },
+    {
+      "residual_gain": 0.9750000000000001,
+      "bias": 0.002,
+      "psnr_mean_db": 28.47420251965523,
+      "ssim_mean": 0.7698744514025748
+    },
+    {
+      "residual_gain": 1.0,
+      "bias": -0.002,
+      "psnr_mean_db": 28.4965845733881,
+      "ssim_mean": 0.7705968404654413
+    },
+    {
+      "residual_gain": 1.0,
+      "bias": -0.001,
+      "psnr_mean_db": 28.514715170860292,
+      "ssim_mean": 0.7708270174451173
+    },
+    {
+      "residual_gain": 1.0,
+      "bias": 0.0,
+      "psnr_mean_db": 28.521756660938262,
+      "ssim_mean": 0.7708906335290522
+    },
+    {
+      "residual_gain": 1.0,
+      "bias": 0.001,
+      "psnr_mean_db": 28.517536899447443,
+      "ssim_mean": 0.7707998499739915
+    },
+    {
+      "residual_gain": 1.0,
+      "bias": 0.002,
+      "psnr_mean_db": 28.5021333694458,
+      "ssim_mean": 0.7705721020232886
+    },
+    {
+      "residual_gain": 1.0250000000000001,
+      "bias": -0.002,
+      "psnr_mean_db": 28.498625215888023,
+      "ssim_mean": 0.7693625845015049
+    },
+    {
+      "residual_gain": 1.0250000000000001,
+      "bias": -0.001,
+      "psnr_mean_db": 28.516814377903938,
+      "ssim_mean": 0.7695929161272943
+    },
+    {
+      "residual_gain": 1.0250000000000001,
+      "bias": 0.0,
+      "psnr_mean_db": 28.523893287777902,
+      "ssim_mean": 0.7696564286947251,
+      "met_ssim_constraint": false,
+      "lpips_mean": 0.2928121923818253
+    },
+    {
+      "residual_gain": 1.0250000000000001,
+      "bias": 0.001,
+      "psnr_mean_db": 28.519691196084022,
+      "ssim_mean": 0.7695654690265655
+    },
+    {
+      "residual_gain": 1.0250000000000001,
+      "bias": 0.002,
+      "psnr_mean_db": 28.504284781217574,
+      "ssim_mean": 0.76933764196001
+    },
+    {
+      "residual_gain": 1.05,
+      "bias": -0.002,
+      "psnr_mean_db": 28.474601483345033,
+      "ssim_mean": 0.7662156210746616
+    },
+    {
+      "residual_gain": 1.05,
+      "bias": -0.001,
+      "psnr_mean_db": 28.49267649054527,
+      "ssim_mean": 0.7664478853344917
+    },
+    {
+      "residual_gain": 1.05,
+      "bias": 0.0,
+      "psnr_mean_db": 28.499755990505218,
+      "ssim_mean": 0.7665133403148502
+    },
+    {
+      "residual_gain": 1.05,
+      "bias": 0.001,
+      "psnr_mean_db": 28.49567109644413,
+      "ssim_mean": 0.7664246515836567
+    },
+    {
+      "residual_gain": 1.05,
+      "bias": 0.002,
+      "psnr_mean_db": 28.480495849251746,
+      "ssim_mean": 0.7661994723137469
+    },
+    {
+      "residual_gain": 1.0750000000000002,
+      "bias": -0.002,
+      "psnr_mean_db": 28.426169395446777,
+      "ssim_mean": 0.7613476941827685
+    },
+    {
+      "residual_gain": 1.0750000000000002,
+      "bias": -0.001,
+      "psnr_mean_db": 28.443998521566392,
+      "ssim_mean": 0.7615849636029453
+    },
+    {
+      "residual_gain": 1.0750000000000002,
+      "bias": 0.0,
+      "psnr_mean_db": 28.45105850994587,
+      "ssim_mean": 0.7616555374581366
+    },
+    {
+      "residual_gain": 1.0750000000000002,
+      "bias": 0.001,
+      "psnr_mean_db": 28.447187241911887,
+      "ssim_mean": 0.7615722747053951
+    },
+    {
+      "residual_gain": 1.0750000000000002,
+      "bias": 0.002,
+      "psnr_mean_db": 28.432453420758247,
+      "ssim_mean": 0.761353007843718
+    },
+    {
+      "residual_gain": 1.1,
+      "bias": -0.002,
+      "psnr_mean_db": 28.35620597600937,
+      "ssim_mean": 0.7550502934958786
+    },
+    {
+      "residual_gain": 1.1,
+      "bias": -0.001,
+      "psnr_mean_db": 28.373704364895822,
+      "ssim_mean": 0.7552945928648114
+    },
+    {
+      "residual_gain": 1.1,
+      "bias": 0.0,
+      "psnr_mean_db": 28.380741673707963,
+      "ssim_mean": 0.7553723820485174
+    },
+    {
+      "residual_gain": 1.1,
+      "bias": 0.001,
+      "psnr_mean_db": 28.377160385251045,
+      "ssim_mean": 0.7552965053822845
+    },
+    {
+      "residual_gain": 1.1,
+      "bias": 0.002,
+      "psnr_mean_db": 28.3630269408226,
+      "ssim_mean": 0.7550851639825851
+    }
+  ]
+}

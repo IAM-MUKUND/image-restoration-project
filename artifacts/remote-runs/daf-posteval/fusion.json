@@ -1,0 +1,125 @@
+{
+  "device": "cuda",
+  "device_name": "Tesla T4",
+  "restormer_checkpoint": "/content/restormer-epoch8.pt",
+  "daf_checkpoint": "/content/image-restoration-project/artifacts/daf-fidelity-10ep/daf_restormer/checkpoints/best.pt",
+  "selection_rule": "highest PSNR with SSIM no more than 0.0005 below Restormer",
+  "selected": {
+    "daf_weight": 0.6000000000000001,
+    "psnr_mean_db": 28.485174867510796,
+    "ssim_mean": 0.770359056815505,
+    "lpips_mean": 0.2818372483830899
+  },
+  "latency": {
+    "latency_median_ms_batch1": 44.98630332946777,
+    "latency_p90_ms_batch1": 59.04042396545411,
+    "latency_iterations": 100
+  },
+  "curve": [
+    {
+      "daf_weight": 0.0,
+      "psnr_mean_db": 28.365569007396697,
+      "ssim_mean": 0.7682728544808924
+    },
+    {
+      "daf_weight": 0.05,
+      "psnr_mean_db": 28.383699095249177,
+      "ssim_mean": 0.7686826534569263
+    },
+    {
+      "daf_weight": 0.1,
+      "psnr_mean_db": 28.400412771105767,
+      "ssim_mean": 0.7690497909672558
+    },
+    {
+      "daf_weight": 0.15000000000000002,
+      "psnr_mean_db": 28.415693795681,
+      "ssim_mean": 0.7693741365335882
+    },
+    {
+      "daf_weight": 0.2,
+      "psnr_mean_db": 28.429517808556557,
+      "ssim_mean": 0.7696555675473065
+    },
+    {
+      "daf_weight": 0.25,
+      "psnr_mean_db": 28.441853642463684,
+      "ssim_mean": 0.7698940156493336
+    },
+    {
+      "daf_weight": 0.30000000000000004,
+      "psnr_mean_db": 28.452691146731375,
+      "ssim_mean": 0.7700894405599683
+    },
+    {
+      "daf_weight": 0.35000000000000003,
+      "psnr_mean_db": 28.462009155750273,
+      "ssim_mean": 0.7702417652588338
+    },
+    {
+      "daf_weight": 0.4,
+      "psnr_mean_db": 28.4697849214077,
+      "ssim_mean": 0.7703511230647564
+    },
+    {
+      "daf_weight": 0.45,
+      "psnr_mean_db": 28.475998809933664,
+      "ssim_mean": 0.7704174101352692
+    },
+    {
+      "daf_weight": 0.5,
+      "psnr_mean_db": 28.48064313530922,
+      "ssim_mean": 0.7704407799057662
+    },
+    {
+      "daf_weight": 0.55,
+      "psnr_mean_db": 28.483707162737847,
+      "ssim_mean": 0.7704212678596377
+    },
+    {
+      "daf_weight": 0.6000000000000001,
+      "psnr_mean_db": 28.485174867510796,
+      "ssim_mean": 0.770359056815505
+    },
+    {
+      "daf_weight": 0.65,
+      "psnr_mean_db": 28.485045769810675,
+      "ssim_mean": 0.7702542803715915
+    },
+    {
+      "daf_weight": 0.7000000000000001,
+      "psnr_mean_db": 28.483321595191956,
+      "ssim_mean": 0.7701071178074926
+    },
+    {
+      "daf_weight": 0.75,
+      "psnr_mean_db": 28.479994827508925,
+      "ssim_mean": 0.7699177369941026
+    },
+    {
+      "daf_weight": 0.8,
+      "psnr_mean_db": 28.47505789399147,
+      "ssim_mean": 0.7696864536963404
+    },
+    {
+      "daf_weight": 0.8500000000000001,
+      "psnr_mean_db": 28.468518632650376,
+      "ssim_mean": 0.7694135249592364
+    },
+    {
+      "daf_weight": 0.9,
+      "psnr_mean_db": 28.460382345318795,
+      "ssim_mean": 0.7690991932526231
+    },
+    {
+      "daf_weight": 0.9500000000000001,
+      "psnr_mean_db": 28.450650200247765,
+      "ssim_mean": 0.7687438265420496
+    },
+    {
+      "daf_weight": 1.0,
+      "psnr_mean_db": 28.439328840374948,
+      "ssim_mean": 0.7683477082289756
+    }
+  ]
+}

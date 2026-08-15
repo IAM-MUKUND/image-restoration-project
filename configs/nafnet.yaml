@@ -1,0 +1,9 @@
+model: nafnet
+adapter: compact_joint_2x
+input_channels: 1
+output_channels: 1
+width: 24
+encoder_blocks: [1, 1]
+middle_blocks: 2
+decoder_blocks: [1, 1]
+upscale: 2

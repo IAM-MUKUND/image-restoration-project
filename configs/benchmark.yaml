@@ -1,0 +1,24 @@
+seed: 42
+split:
+  train: 2880
+  validation: 320
+training:
+  epochs: 3
+  batch_size: 16
+  optimizer: AdamW
+  learning_rate: 0.0002
+  weight_decay: 0.0001
+  amp: true
+  synthetic_degradation_probability: 0.0
+loss:
+  charbonnier: 1.0
+  ssim: 0.1
+  frequency: 0.0
+  gradient: 0.0
+  auxiliary_clean_lr: 0.2
+  uncertainty_calibration: 0.01
+metrics:
+  - PSNR
+  - SSIM
+  - LPIPS-AlexNet
+  - batch-1 latency

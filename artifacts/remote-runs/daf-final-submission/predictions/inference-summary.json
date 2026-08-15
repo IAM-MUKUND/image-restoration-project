@@ -1,0 +1,11 @@
+{
+  "model": "daf_restormer",
+  "weights": "/content/image-restoration-project/artifacts/daf-perceptual-stage2/epoch-1.pt",
+  "input_dir": "/content/kla-test/NoisyLR",
+  "output_dir": "/content/daf-final-submission/predictions",
+  "images": 400,
+  "self_ensemble_transforms": 8,
+  "seconds": 48.03698670199992,
+  "images_per_second": 8.326916975068022,
+  "device": "cuda"
+}

@@ -1,0 +1,129 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/daf-ablation/restormer-10ep",
+    "epochs": 10,
+    "batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": null,
+    "val_limit": null,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.0,
+    "gradient_loss_weight": 0.0,
+    "auxiliary_loss_weight": 0.0,
+    "uncertainty_loss_weight": 0.0,
+    "synthetic_degradation_probability": 0.0,
+    "amp": true,
+    "compute_lpips": true
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "restormer": {
+      "status": "completed",
+      "model": "restormer",
+      "notes": "Compact two-level Restormer adaptation with a late 2x head.",
+      "parameters": 1608757,
+      "checkpoint": "/content/image-restoration-project/artifacts/daf-ablation/restormer-10ep/restormer/checkpoints/best.pt",
+      "checkpoint_bytes": 6481442,
+      "best_epoch": 10,
+      "training_seconds": 712.330955201,
+      "peak_vram_mib": 2321.58935546875,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.07384160718777114,
+          "learning_rate": 0.00019510565162951537,
+          "val_psnr_mean_db": 27.342169269919395,
+          "val_ssim_mean": 0.7310456893406808
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.06183548191976216,
+          "learning_rate": 0.00018090169943749473,
+          "val_psnr_mean_db": 27.625272780656815,
+          "val_ssim_mean": 0.7473946690093726
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.060084974807169705,
+          "learning_rate": 0.00015877852522924732,
+          "val_psnr_mean_db": 27.811869591474533,
+          "val_ssim_mean": 0.752418119739741
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.05872480679924289,
+          "learning_rate": 0.00013090169943749474,
+          "val_psnr_mean_db": 28.030446836352347,
+          "val_ssim_mean": 0.7598159634508193
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.057359227051751484,
+          "learning_rate": 9.999999999999999e-05,
+          "val_psnr_mean_db": 28.175146329402924,
+          "val_ssim_mean": 0.7632743513677269
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.05664619667869475,
+          "learning_rate": 6.909830056250526e-05,
+          "val_psnr_mean_db": 28.260410436987875,
+          "val_ssim_mean": 0.7645495473407209
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.056107260369592245,
+          "learning_rate": 4.122147477075269e-05,
+          "val_psnr_mean_db": 28.313481783866884,
+          "val_ssim_mean": 0.7684159405063837
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.05575294941663742,
+          "learning_rate": 1.9098300562505263e-05,
+          "val_psnr_mean_db": 28.365569007396697,
+          "val_ssim_mean": 0.7682728544808924
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0555010796058923,
+          "learning_rate": 4.894348370484646e-06,
+          "val_psnr_mean_db": 28.370799297094344,
+          "val_ssim_mean": 0.771080279070884
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.055386208970513606,
+          "learning_rate": 0.0,
+          "val_psnr_mean_db": 28.393100327253343,
+          "val_ssim_mean": 0.7709464966785162
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 28.393100327253343,
+        "psnr_median_db": 28.701961517333984,
+        "psnr_worst_decile_db": 22.226943588256837,
+        "ssim_mean": 0.7709464966785162,
+        "lpips_mean": 0.27190778822405265,
+        "validation_wall_seconds": 2.736343300000044,
+        "validation_images_per_second": 116.94439071296165
+      },
+      "latency_median_ms_batch1": 13.65990400314331,
+      "latency_p90_ms_batch1": 14.520131397247315,
+      "latency_iterations": 100
+    }
+  }
+}

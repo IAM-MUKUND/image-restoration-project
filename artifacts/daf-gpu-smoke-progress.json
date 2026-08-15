@@ -1,0 +1,39 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/daf-gpu-smoke",
+    "epochs": 1,
+    "batch_size": 4,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": 256,
+    "val_limit": 64,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.03,
+    "gradient_loss_weight": 0.02,
+    "auxiliary_loss_weight": 0.2,
+    "uncertainty_loss_weight": 0.01,
+    "synthetic_degradation_probability": 0.35,
+    "amp": true,
+    "compute_lpips": false
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "daf_restormer": {
+      "status": "failed",
+      "model": "daf_restormer",
+      "error_type": "RuntimeError",
+      "error": "Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same"
+    }
+  }
+}

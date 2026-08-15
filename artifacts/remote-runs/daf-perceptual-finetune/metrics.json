@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "source_checkpoint": "/content/image-restoration-project/artifacts/daf-fidelity-10ep/daf_restormer/checkpoints/best.pt",
+  "reference": {
+    "psnr": 28.393100327253343,
+    "ssim": 0.7709464966785162,
+    "lpips": 0.27190778822405265
+  },
+  "selection": "all-metric dominance, else balanced normalized improvement",
+  "dominates_reference": false,
+  "selected_epoch": 2,
+  "selected_metrics": {
+    "samples": 320,
+    "psnr_mean_db": 28.424035793542863,
+    "psnr_median_db": 28.646015167236328,
+    "psnr_worst_decile_db": 22.22675151824951,
+    "ssim_mean": 0.7696540317032486,
+    "lpips_mean": 0.27402321553090586,
+    "validation_wall_seconds": 5.046007266000288,
+    "validation_images_per_second": 63.41647626156663
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.0812522214733892,
+      "learning_rate": 5e-06,
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 28.417822286486626,
+        "psnr_median_db": 28.671768188476562,
+        "psnr_worst_decile_db": 22.211087036132813,
+        "ssim_mean": 0.7677950745914132,
+        "lpips_mean": 0.28483005951857193,
+        "validation_wall_seconds": 5.194812734000152,
+        "validation_images_per_second": 61.59991060035594
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.08105313333993157,
+      "learning_rate": 0.0,
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 28.424035793542863,
+        "psnr_median_db": 28.646015167236328,
+        "psnr_worst_decile_db": 22.22675151824951,
+        "ssim_mean": 0.7696540317032486,
+        "lpips_mean": 0.27402321553090586,
+        "validation_wall_seconds": 5.046007266000288,
+        "validation_images_per_second": 63.41647626156663
+      }
+    }
+  ],
+  "training_seconds": 299.380192741,
+  "peak_vram_mib": 4943.06982421875,
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-perceptual-finetune/best.pt"
+}

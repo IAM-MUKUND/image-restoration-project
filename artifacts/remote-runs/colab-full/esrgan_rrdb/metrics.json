@@ -1,0 +1,47 @@
+{
+  "status": "completed",
+  "model": "esrgan_rrdb",
+  "notes": "ESRGAN RRDB generator trained in fidelity/PSNR mode; no discriminator or GAN loss.",
+  "parameters": 1136097,
+  "checkpoint": "/content/image-restoration-project/artifacts/colab-full/esrgan_rrdb/checkpoints/best.pt",
+  "checkpoint_bytes": 4601783,
+  "best_epoch": 3,
+  "training_seconds": 274.142719081,
+  "peak_vram_mib": 1952.87646484375,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.08618555400106642,
+      "learning_rate": 0.00015000000000000001,
+      "val_psnr_mean_db": 26.26269987523556,
+      "val_ssim_mean": 0.6664380810689181
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0789687590363125,
+      "learning_rate": 5.000000000000003e-05,
+      "val_psnr_mean_db": 26.48393135070801,
+      "val_ssim_mean": 0.6726431295275688
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.07687130177186595,
+      "learning_rate": 0.0,
+      "val_psnr_mean_db": 26.514296025037766,
+      "val_ssim_mean": 0.6720977186225354
+    }
+  ],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 26.514296025037766,
+    "psnr_median_db": 26.634215354919434,
+    "psnr_worst_decile_db": 21.485003089904787,
+    "ssim_mean": 0.6720977186225354,
+    "lpips_mean": 0.33135591831523925,
+    "validation_wall_seconds": 4.0199267289999625,
+    "validation_images_per_second": 79.60344095117536
+  },
+  "latency_median_ms_batch1": 13.98422384262085,
+  "latency_p90_ms_batch1": 15.069708728790284,
+  "latency_iterations": 100
+}

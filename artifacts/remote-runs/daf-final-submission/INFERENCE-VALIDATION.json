@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "input_count": 400,
+  "output_count": 400,
+  "filenames_match": true,
+  "expected_shape": [
+    256,
+    256
+  ],
+  "expected_dtype": "float32",
+  "finite": true,
+  "global_min": 0.0,
+  "global_max": 1.0,
+  "mean_of_image_means": 0.443017781637609,
+  "within_submission_range": true,
+  "failures": [],
+  "checkpoint_sha256": "0ee70a5d4698444e5a47c6f85382f55c27d6dd6fa0af8e2853b25954e90c13a3",
+  "input_archive_sha256": "cd65dde33c9a44c899d0906d7d71daf23bd93c4565b0225ef4226e3285a0d9de"
+}

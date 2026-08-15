@@ -1,0 +1,25 @@
+{
+  "status": "completed",
+  "model": "bicubic",
+  "notes": "Non-learning interpolation floor.",
+  "parameters": 0,
+  "checkpoint": null,
+  "checkpoint_bytes": 0,
+  "best_epoch": null,
+  "training_seconds": 0.0,
+  "peak_vram_mib": 0.0,
+  "history": [],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 23.278916916251184,
+    "psnr_median_db": 22.86436176300049,
+    "psnr_worst_decile_db": 19.422074127197266,
+    "ssim_mean": 0.5442567527294159,
+    "lpips_mean": 0.4312412243103608,
+    "validation_wall_seconds": 1.158644071000026,
+    "validation_images_per_second": 276.184902688716
+  },
+  "latency_median_ms_batch1": 0.12774400413036346,
+  "latency_p90_ms_batch1": 0.13376320451498033,
+  "latency_iterations": 100
+}

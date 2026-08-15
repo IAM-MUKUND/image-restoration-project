@@ -1,0 +1,12 @@
+# Runtime and evaluation dependencies used by the repository.
+torch==2.6.0
+torchvision==0.21.0
+numpy==1.26.4
+Pillow==10.4.0
+pytorch-msssim==1.0.0
+lpips==0.1.4
+tqdm==4.66.2
+
+# Submission reproduction and validation utilities.
+matplotlib==3.10.0
+pytest==8.4.2

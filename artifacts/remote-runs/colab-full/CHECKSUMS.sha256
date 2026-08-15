@@ -1,0 +1,6 @@
+f8c8e8e226228c93f6a16137e551a2648f617c32f2a820fe9fad9c43b018324a  artifacts/remote-runs/colab-full/esrgan_rrdb/checkpoints/best.pt
+df58aabdb96117b7172abefa7b34f8eea3c612d38b601b89c78fd4e19edf0de4  artifacts/remote-runs/colab-full/mprnet/checkpoints/best.pt
+fe4beb68ac05788e02a00ed103f5a0144854841b2779831be663853ef2b63125  artifacts/remote-runs/colab-full/nafnet/checkpoints/best.pt
+cc0f0a25f9e80d147a9817165789969b57b656742d0d2a20ef9cfcf3c7d68bb6  artifacts/remote-runs/colab-full/restormer/checkpoints/best.pt
+c5e945b191d15690fe40f1021c95582de90d61c894bcdbe5a54e537105e0c909  artifacts/remote-runs/colab-full/swinir/checkpoints/best.pt
+dbf2df7f6c57be12e20b9a64d642fcf3a25106046e724a513a444bbbbb6b99a7  artifacts/colab-downloads/kla-benchmark-full.tar.gz
