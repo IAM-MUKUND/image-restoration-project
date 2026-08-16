@@ -42,8 +42,8 @@ class MixedDegradationAugmentor:
         return image
 
     @staticmethod
-    def _downsample(image: torch.Tensor, mode: str) -> torch.Tensor:
-        kwargs: dict[str, object] = {"size": (128, 128), "mode": mode}
+    def _downsample(image: torch.Tensor, mode: str, target_size: tuple[int, int] = (128, 128)) -> torch.Tensor:
+        kwargs: dict[str, object] = {"size": target_size, "mode": mode}
         if mode in {"bilinear", "bicubic"}:
             kwargs.update(align_corners=False, antialias=True)
         return F.interpolate(image.unsqueeze(0), **kwargs).squeeze(0)
@@ -52,6 +52,7 @@ class MixedDegradationAugmentor:
         if random.random() >= self.probability:
             return official_lr
 
+        target_size = (official_lr.shape[-2], official_lr.shape[-1])
         sigma = random.uniform(0.2, 1.6) if random.random() < 0.7 else 0.0
         speckle_sigma = random.uniform(0.015, 0.18) if random.random() < 0.9 else 0.0
         gaussian_sigma = random.uniform(0.003, 0.08) if random.random() < 0.9 else 0.0
@@ -60,9 +61,9 @@ class MixedDegradationAugmentor:
         degraded = self._blur(clean_hr, sigma)
         if random.random() < 0.5:
             degraded = self._noise(degraded, speckle_sigma, gaussian_sigma)
-            degraded = self._downsample(degraded, mode)
+            degraded = self._downsample(degraded, mode, target_size)
         else:
-            degraded = self._downsample(degraded, mode)
+            degraded = self._downsample(degraded, mode, target_size)
             degraded = self._noise(degraded, speckle_sigma, gaussian_sigma)
 
         # Match the released LR distribution without clipping its informative tails.

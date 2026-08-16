@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "data_root": "/content/kla-data/extracted/train",
+    "output_dir": "/content/image-restoration-project/artifacts/restormer-curriculum-stage2",
+    "epochs": 5,
+    "batch_size": 8,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": null,
+    "val_limit": null,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.0,
+    "gradient_loss_weight": 0.0,
+    "auxiliary_loss_weight": 0.2,
+    "uncertainty_loss_weight": 0.01,
+    "perceptual_loss_weight": 0.01,
+    "synthetic_degradation_probability": 0.3,
+    "resume_checkpoint": "/content/image-restoration-project/artifacts/restormer-curriculum-stage1/restormer/checkpoints/best.pt",
+    "eta_min": 1e-07,
+    "crop_size": null,
+    "amp": true,
+    "compute_lpips": true
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "device_name": "Tesla T4",
+    "git_revision": null
+  },
+  "results": {
+    "restormer": {
+      "status": "completed",
+      "model": "restormer",
+      "notes": "Compact two-level Restormer adaptation with a late 2x head.",
+      "parameters": 1608757,
+      "checkpoint": "/content/image-restoration-project/artifacts/restormer-curriculum-stage2/restormer/checkpoints/best.pt",
+      "checkpoint_bytes": 6481698,
+      "best_epoch": 5,
+      "training_seconds": 363.9726932,
+      "peak_vram_mib": 2336.92529296875,
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.10046243335430821,
+          "learning_rate": 2.7144804065905464e-05,
+          "val_psnr_mean_db": 25.515219751000405,
+          "val_ssim_mean": 0.6359576515387744
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.0792232800895969,
+          "learning_rate": 1.9669804065905462e-05,
+          "val_psnr_mean_db": 26.477682995796204,
+          "val_ssim_mean": 0.6907150740269572
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.07340217218216923,
+          "learning_rate": 1.0430195934094536e-05,
+          "val_psnr_mean_db": 26.805514314770697,
+          "val_ssim_mean": 0.7061741326469928
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.07110074050724506,
+          "learning_rate": 2.9551959340945365e-06,
+          "val_psnr_mean_db": 26.96902863383293,
+          "val_ssim_mean": 0.7174594731070101
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.07030797466221783,
+          "learning_rate": 1e-07,
+          "val_psnr_mean_db": 27.0107119679451,
+          "val_ssim_mean": 0.7196956892032176
+        }
+      ],
+      "metrics": {
+        "samples": 320,
+        "psnr_mean_db": 27.0107119679451,
+        "psnr_median_db": 27.234145164489746,
+        "psnr_worst_decile_db": 21.61205883026123,
+        "ssim_mean": 0.7196956892032176,
+        "lpips_mean": 0.34269823906943203,
+        "validation_wall_seconds": 2.570950398999912,
+        "validation_images_per_second": 124.46758993268736
+      },
+      "latency_median_ms_batch1": 13.460495948791504,
+      "latency_p90_ms_batch1": 15.570943737030031,
+      "latency_iterations": 100
+    }
+  }
+}

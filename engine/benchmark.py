@@ -60,6 +60,10 @@ class BenchmarkSettings:
     uncertainty_loss_weight: float = 0.01
     perceptual_loss_weight: float = 0.0
     synthetic_degradation_probability: float = 0.0
+    resume_checkpoint: str | None = None
+    eta_min: float = 1e-7
+    crop_size: int | None = None
+    smooth_variance_loss_weight: float = 0.0
     amp: bool = True
     compute_lpips: bool = True
 
@@ -226,12 +230,28 @@ def train_one_model(
         train_limit=settings.train_limit,
         val_limit=settings.val_limit,
         synthetic_degradation_probability=settings.synthetic_degradation_probability,
+        crop_size=settings.crop_size,
     )
     model_dir = Path(settings.output_dir) / name
     checkpoint_dir = model_dir / "checkpoints"
     prediction_dir = model_dir / "predictions"
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
     model = build_model(name).to(device)
+    if settings.resume_checkpoint and Path(settings.resume_checkpoint).exists():
+        ckpt_path = Path(settings.resume_checkpoint)
+        with open(ckpt_path, "rb") as f:
+            header = f.read(10)
+        if header.startswith(b"version "):
+            print(f"[{name}] Notice: {ckpt_path} is a Git LFS pointer file. Initializing model directly.")
+        else:
+            try:
+                ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
+                state_dict = ckpt["model"] if isinstance(ckpt, dict) and "model" in ckpt else ckpt
+                model.load_state_dict(state_dict, strict=False)
+                print(f"[{name}] Successfully loaded resume checkpoint: {ckpt_path}")
+            except Exception as err:
+                print(f"[{name}] Could not load checkpoint {ckpt_path}: {err}")
+
     parameters = sum(parameter.numel() for parameter in model.parameters())
     criterion = CombinedRestorationLoss(
         ssim_weight=settings.ssim_loss_weight,
@@ -240,11 +260,27 @@ def train_one_model(
         auxiliary_weight=settings.auxiliary_loss_weight,
         uncertainty_weight=settings.uncertainty_loss_weight,
         perceptual_weight=settings.perceptual_loss_weight,
+        smooth_variance_weight=settings.smooth_variance_loss_weight,
     ).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=settings.learning_rate, weight_decay=settings.weight_decay
     )
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(settings.epochs, 1))
+    # Warmup for 1 epoch, then Cosine Annealing decay down to eta_min
+    warmup_epochs = 1 if settings.epochs > 1 else 0
+    if warmup_epochs > 0:
+        warmup_sched = torch.optim.lr_scheduler.LinearLR(
+            optimizer, start_factor=0.1, end_factor=1.0, total_iters=warmup_epochs
+        )
+        cosine_sched = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=max(settings.epochs - warmup_epochs, 1), eta_min=settings.eta_min
+        )
+        scheduler = torch.optim.lr_scheduler.SequentialLR(
+            optimizer, schedulers=[warmup_sched, cosine_sched], milestones=[warmup_epochs]
+        )
+    else:
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=max(settings.epochs, 1), eta_min=settings.eta_min
+        )
     use_amp = settings.amp and device.type == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     history: list[dict[str, float | int]] = []
@@ -271,13 +307,15 @@ def train_one_model(
                 else:
                     outputs = None
                     prediction = model(noisy)
-            # FFT and fixed Sobel kernels are evaluated in float32 outside AMP.
-            # This also avoids CUDA dtype mismatches for functional convolutions.
+            # Gate uncertainty loss to only activate after epoch 3
+            uncertainty_tensor = (
+                outputs.get("uncertainty").float() if (outputs is not None and epoch >= 3) else None
+            )
             loss = criterion(
                 prediction.float(),
                 target.float(),
                 clean_lr=outputs.get("clean_lr").float() if outputs is not None else None,
-                uncertainty=outputs.get("uncertainty").float() if outputs is not None else None,
+                uncertainty=uncertainty_tensor,
             )
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)

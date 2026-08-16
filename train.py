@@ -17,12 +17,17 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--ssim-weight", type=float, default=0.1)
     parser.add_argument("--frequency-weight", type=float, default=0.0)
     parser.add_argument("--gradient-weight", type=float, default=0.0)
     parser.add_argument("--auxiliary-weight", type=float, default=0.2)
     parser.add_argument("--uncertainty-weight", type=float, default=0.01)
     parser.add_argument("--perceptual-weight", type=float, default=0.0)
     parser.add_argument("--synthetic-probability", type=float, default=0.0)
+    parser.add_argument("--resume-checkpoint", type=str, default=None)
+    parser.add_argument("--eta-min", type=float, default=1e-7)
+    parser.add_argument("--crop-size", type=int, default=None)
+    parser.add_argument("--smooth-variance-weight", type=float, default=0.0)
     args = parser.parse_args()
     settings = BenchmarkSettings(
         data_root=str(args.data_root.resolve()),
@@ -31,12 +36,17 @@ def main() -> None:
         batch_size=args.batch_size,
         learning_rate=args.learning_rate,
         seed=args.seed,
+        ssim_loss_weight=args.ssim_weight,
         frequency_loss_weight=args.frequency_weight,
         gradient_loss_weight=args.gradient_weight,
         auxiliary_loss_weight=args.auxiliary_weight,
         uncertainty_loss_weight=args.uncertainty_weight,
         perceptual_loss_weight=args.perceptual_weight,
         synthetic_degradation_probability=args.synthetic_probability,
+        resume_checkpoint=args.resume_checkpoint,
+        eta_min=args.eta_min,
+        crop_size=args.crop_size,
+        smooth_variance_loss_weight=args.smooth_variance_weight,
     )
     run_benchmarks([args.model], settings)
 

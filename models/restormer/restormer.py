@@ -7,6 +7,26 @@ from torch import nn
 import torch.nn.functional as F
 
 
+def icnr_init(conv: nn.Conv2d, upscale_factor: int = 2) -> None:
+    """ICNR initialisation for a Conv2d that feeds into PixelShuffle.
+
+    Eliminates checkerboard / grain artefacts caused by cross-channel variance
+    imbalance after sub-pixel shuffling. Adds small uniform perturbation to
+    prevent AMP GradScaler underflow from exact channel symmetry.
+    """
+    out_channels, in_channels, kH, kW = conv.weight.shape
+    base_channels = out_channels // (upscale_factor ** 2)
+    subkernel = torch.empty(base_channels, in_channels, kH, kW)
+    nn.init.kaiming_normal_(subkernel, mode="fan_out", nonlinearity="relu")
+    kernel = subkernel.repeat_interleave(upscale_factor ** 2, dim=0)
+    # Symmetry-breaking perturbation for AMP stability
+    perturbation = torch.empty_like(kernel).uniform_(-1e-3, 1e-3)
+    kernel = kernel + perturbation
+    conv.weight.data.copy_(kernel)
+    if conv.bias is not None:
+        nn.init.zeros_(conv.bias)
+
+
 class LayerNorm2d(nn.Module):
     def __init__(self, channels: int, eps: float = 1e-6):
         super().__init__()
@@ -88,7 +108,9 @@ class Downsample(nn.Module):
 class Upsample(nn.Module):
     def __init__(self, dim: int):
         super().__init__()
-        self.body = nn.Sequential(nn.Conv2d(dim, dim * 2, 3, padding=1, bias=False), nn.PixelShuffle(2))
+        conv = nn.Conv2d(dim, dim * 2, 3, padding=1, bias=False)
+        icnr_init(conv, upscale_factor=2)  # prevent PixelShuffle checkerboard grain
+        self.body = nn.Sequential(conv, nn.PixelShuffle(2))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.body(x)

@@ -4,6 +4,7 @@ from .gradient import GradientLoss
 from .l1 import CharbonnierLoss
 from .perceptual import PerceptualLoss
 from .ssim import SSIMLoss
+from .variance_weighted import SmoothRegionVarianceLoss
 
 __all__ = [
     "CharbonnierLoss",
@@ -11,5 +12,6 @@ __all__ = [
     "FrequencyLoss",
     "GradientLoss",
     "PerceptualLoss",
+    "SmoothRegionVarianceLoss",
     "CombinedRestorationLoss",
 ]

@@ -1,0 +1,61 @@
+{
+  "status": "completed",
+  "model": "restormer",
+  "notes": "Compact two-level Restormer adaptation with a late 2x head.",
+  "parameters": 1608757,
+  "checkpoint": "/content/image-restoration-project/artifacts/restormer-curriculum-stage2/restormer/checkpoints/best.pt",
+  "checkpoint_bytes": 6481698,
+  "best_epoch": 5,
+  "training_seconds": 363.9726932,
+  "peak_vram_mib": 2336.92529296875,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.10046243335430821,
+      "learning_rate": 2.7144804065905464e-05,
+      "val_psnr_mean_db": 25.515219751000405,
+      "val_ssim_mean": 0.6359576515387744
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0792232800895969,
+      "learning_rate": 1.9669804065905462e-05,
+      "val_psnr_mean_db": 26.477682995796204,
+      "val_ssim_mean": 0.6907150740269572
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.07340217218216923,
+      "learning_rate": 1.0430195934094536e-05,
+      "val_psnr_mean_db": 26.805514314770697,
+      "val_ssim_mean": 0.7061741326469928
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.07110074050724506,
+      "learning_rate": 2.9551959340945365e-06,
+      "val_psnr_mean_db": 26.96902863383293,
+      "val_ssim_mean": 0.7174594731070101
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.07030797466221783,
+      "learning_rate": 1e-07,
+      "val_psnr_mean_db": 27.0107119679451,
+      "val_ssim_mean": 0.7196956892032176
+    }
+  ],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 27.0107119679451,
+    "psnr_median_db": 27.234145164489746,
+    "psnr_worst_decile_db": 21.61205883026123,
+    "ssim_mean": 0.7196956892032176,
+    "lpips_mean": 0.34269823906943203,
+    "validation_wall_seconds": 2.570950398999912,
+    "validation_images_per_second": 124.46758993268736
+  },
+  "latency_median_ms_batch1": 13.460495948791504,
+  "latency_p90_ms_batch1": 15.570943737030031,
+  "latency_iterations": 100
+}

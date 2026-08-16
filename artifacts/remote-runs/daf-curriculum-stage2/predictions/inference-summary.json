@@ -1,0 +1,11 @@
+{
+  "model": "daf_restormer",
+  "weights": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/remote-runs/daf-curriculum-stage2/daf_restormer/checkpoints/best.pt",
+  "input_dir": "/home/mukundvinayak/semiconductor-image-restoration/main_dataset/Test_NoisyLR/NoisyLR",
+  "output_dir": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/remote-runs/daf-curriculum-stage2/predictions",
+  "images": 400,
+  "self_ensemble_transforms": 1,
+  "seconds": 10.259225657999195,
+  "images_per_second": 38.98929737334679,
+  "device": "cuda"
+}

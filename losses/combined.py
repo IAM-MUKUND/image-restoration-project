@@ -8,6 +8,7 @@ from .frequency import FrequencyLoss
 from .gradient import GradientLoss
 from .l1 import CharbonnierLoss
 from .ssim import SSIMLoss
+from .variance_weighted import SmoothRegionVarianceLoss
 
 
 class CombinedRestorationLoss(nn.Module):
@@ -20,6 +21,7 @@ class CombinedRestorationLoss(nn.Module):
         uncertainty_weight: float = 0.0,
         perceptual_weight: float = 0.0,
         perceptual_max_size: int = 128,
+        smooth_variance_weight: float = 0.0,
     ):
         super().__init__()
         self.ssim_weight = ssim_weight
@@ -28,10 +30,12 @@ class CombinedRestorationLoss(nn.Module):
         self.auxiliary_weight = auxiliary_weight
         self.uncertainty_weight = uncertainty_weight
         self.perceptual_weight = perceptual_weight
+        self.smooth_variance_weight = smooth_variance_weight
         self.charbonnier = CharbonnierLoss()
         self.ssim = SSIMLoss()
         self.frequency = FrequencyLoss()
         self.gradient = GradientLoss()
+        self.smooth_variance = SmoothRegionVarianceLoss()
         if perceptual_weight:
             from .perceptual import PerceptualLoss
 
@@ -53,6 +57,8 @@ class CombinedRestorationLoss(nn.Module):
             loss = loss + self.frequency_weight * self.frequency(prediction, target)
         if self.gradient_weight:
             loss = loss + self.gradient_weight * self.gradient(prediction, target)
+        if self.smooth_variance_weight:
+            loss = loss + self.smooth_variance_weight * self.smooth_variance(prediction, target)
         if self.auxiliary_weight and clean_lr is not None:
             clean_lr_target = F.interpolate(
                 target.float(), size=clean_lr.shape[-2:], mode="bicubic", align_corners=False, antialias=True

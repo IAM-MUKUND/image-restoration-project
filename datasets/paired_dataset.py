@@ -17,11 +17,13 @@ class PairedNpyDataset(Dataset):
         augment: bool = True,
         filenames: Optional[Sequence[str]] = None,
         synthetic_degradation_probability: float = 0.0,
+        crop_size: Optional[int] = None,
     ):
         super().__init__()
         self.lr_dir = Path(lr_dir)
         self.gt_dir = Path(gt_dir)
         self.augment = augment
+        self.crop_size = crop_size
         self.synthetic_degradation = MixedDegradationAugmentor(
             synthetic_degradation_probability if augment else 0.0
         )
@@ -67,6 +69,16 @@ class PairedNpyDataset(Dataset):
 
         return lr.copy(), gt.copy()
 
+    def _crop_patch(self, lr: np.ndarray, gt: np.ndarray):
+        """Random paired patch crop if crop_size is specified."""
+        if self.crop_size is not None and self.crop_size < 128:
+            h, w = lr.shape
+            top = random.randint(0, h - self.crop_size)
+            left = random.randint(0, w - self.crop_size)
+            lr = lr[top : top + self.crop_size, left : left + self.crop_size]
+            gt = gt[top * 2 : (top + self.crop_size) * 2, left * 2 : (left + self.crop_size) * 2]
+        return lr.copy(), gt.copy()
+
     def __getitem__(self, idx: int):
         lr_path, gt_path = self.file_pairs[idx]
 
@@ -83,6 +95,9 @@ class PairedNpyDataset(Dataset):
         # Apply augmentations if training
         if self.augment:
             lr_arr, gt_arr = self._apply_augmentations(lr_arr, gt_arr)
+
+        # Apply random patch crop (unconditional for all dataset items if crop_size is set)
+        lr_arr, gt_arr = self._crop_patch(lr_arr, gt_arr)
 
         # Add channel dimension: (H, W) -> (1, H, W)
         lr_tensor = torch.from_numpy(lr_arr).unsqueeze(0)
@@ -101,6 +116,7 @@ def get_dataloaders(
     train_limit: Optional[int] = None,
     val_limit: Optional[int] = None,
     synthetic_degradation_probability: float = 0.0,
+    crop_size: Optional[int] = None,
 ):
     """Creates train and validation dataloaders with a fixed reproducible random split."""
     all_names = sorted(path.name for path in Path(lr_dir).glob("*.npy"))
@@ -132,6 +148,7 @@ def get_dataloaders(
         augment=True,
         filenames=train_names,
         synthetic_degradation_probability=synthetic_degradation_probability,
+        crop_size=crop_size,
     )
     val_dataset = PairedNpyDataset(lr_dir, gt_dir, augment=False, filenames=val_names)
 

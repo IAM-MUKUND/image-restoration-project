@@ -1,0 +1,43 @@
+{
+  "settings": {
+    "data_root": "/home/mukundvinayak/semiconductor-image-restoration/main_dataset/train/train",
+    "output_dir": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/restormer-curriculum-stage1",
+    "epochs": 10,
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "num_workers": 2,
+    "train_limit": null,
+    "val_limit": null,
+    "ssim_loss_weight": 0.1,
+    "frequency_loss_weight": 0.0,
+    "gradient_loss_weight": 0.0,
+    "auxiliary_loss_weight": 0.2,
+    "uncertainty_loss_weight": 0.01,
+    "perceptual_loss_weight": 0.0,
+    "synthetic_degradation_probability": 0.3,
+    "resume_checkpoint": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/remote-runs/colab-full/restormer/checkpoints/best.pt",
+    "eta_min": 1e-07,
+    "crop_size": 64,
+    "amp": true,
+    "compute_lpips": true
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "torch": "2.13.0+cu130",
+    "cuda_runtime": "13.0",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "git_revision": "9ed8941123a6ffa5e2dd1e9ba2d7c2bd041bc8ad"
+  },
+  "results": {
+    "restormer": {
+      "status": "failed",
+      "model": "restormer",
+      "error_type": "UnpicklingError",
+      "error": "invalid load key, 'v'."
+    }
+  }
+}

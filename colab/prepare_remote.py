@@ -21,8 +21,9 @@ def main() -> None:
         raise FileNotFoundError(f"Upload the source archive first: {SOURCE_ARCHIVE}")
     if PROJECT_ROOT.exists():
         shutil.rmtree(PROJECT_ROOT)
+    PROJECT_ROOT.mkdir(parents=True, exist_ok=True)
     with tarfile.open(SOURCE_ARCHIVE, "r:gz") as archive:
-        archive.extractall("/content", filter="data")
+        archive.extractall(PROJECT_ROOT, filter="data")
 
     subprocess.check_call(
         [

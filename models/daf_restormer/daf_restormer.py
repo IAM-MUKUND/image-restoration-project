@@ -9,6 +9,29 @@ import torch.nn.functional as F
 from models.restormer.restormer import Downsample, GDFN, LayerNorm2d, MDTA, Upsample
 
 
+def icnr_init(conv: nn.Conv2d, upscale_factor: int = 2) -> None:
+    """ICNR initialisation for a Conv2d that feeds into PixelShuffle.
+
+    Initialises the weights so every sub-pixel position starts with the same
+    value (equivalent to a nearest-neighbour upsample), eliminating the
+    cross-channel variance imbalance that causes checkerboard / grain artefacts.
+
+    Reference: Aitken et al. 2017 "Checkerboard artifact free sub-pixel
+    convolution" (https://arxiv.org/abs/1707.02937).
+    """
+    out_channels, in_channels, kH, kW = conv.weight.shape
+    base_channels = out_channels // (upscale_factor ** 2)
+    if out_channels % (upscale_factor ** 2) != 0:
+        raise ValueError(
+            f"Conv2d out_channels ({out_channels}) must be divisible by "
+            f"upscale_factor² ({upscale_factor ** 2}) for ICNR init."
+        )
+    subkernel = torch.empty(base_channels, in_channels, kH, kW)
+    nn.init.kaiming_normal_(subkernel, mode="fan_out", nonlinearity="relu")
+    kernel = subkernel.repeat_interleave(upscale_factor ** 2, dim=0)
+    conv.weight.data.copy_(kernel)
+
+
 class DegradationEncoder(nn.Module):
     """Infer global degradation context and a local noise-strength map."""
 
@@ -131,7 +154,7 @@ class DAFRestormerSR(nn.Module):
         self.degradation = DegradationEncoder(prompt_dim=prompt_dim)
         self.embed = nn.Conv2d(2, dim, 3, padding=1, bias=False)
         self.noise_inject1 = nn.Conv2d(1, dim, 3, padding=1, bias=False)
-        self.enc1 = PromptedStage(dim, blocks_per_level[0], 1, prompt_dim)
+        self.enc1 = PromptedStage(dim, blocks_per_level[0], 2, prompt_dim)
 
         self.down1 = Downsample(dim)
         self.noise_inject2 = nn.Conv2d(1, dim * 2, 3, padding=1, bias=False)
@@ -147,12 +170,22 @@ class DAFRestormerSR(nn.Module):
         self.dec2 = PromptedStage(dim * 2, blocks_per_level[1], 2, prompt_dim)
         self.up1 = Upsample(dim * 2)
         self.reduce1 = nn.Conv2d(dim * 2, dim, 1, bias=False)
-        self.dec1 = PromptedStage(dim, blocks_per_level[0], 1, prompt_dim)
+        self.dec1 = PromptedStage(dim, blocks_per_level[0], 2, prompt_dim)
 
         self.clean_lr_head = nn.Conv2d(dim, 1, 3, padding=1)
-        self.sr = nn.Sequential(nn.Conv2d(dim, dim * 4, 3, padding=1), nn.PixelShuffle(2))
+        _sr_conv = nn.Conv2d(dim, dim * 4, 3, padding=1)
+        icnr_init(_sr_conv, upscale_factor=2)
+        self.sr = nn.Sequential(_sr_conv, nn.PixelShuffle(2))
         self.output = nn.Conv2d(dim, 1, 3, padding=1)
-        self.uncertainty = nn.Sequential(nn.Conv2d(dim, dim // 2, 3, padding=1), nn.GELU(), nn.Conv2d(dim // 2, 1, 3, padding=1), nn.Softplus())
+        nn.init.zeros_(self.output.weight)
+        nn.init.zeros_(self.output.bias)
+        # Decouple uncertainty to branch independently off d1 at LR scale
+        self.uncertainty = nn.Sequential(
+            nn.Conv2d(dim, dim // 2, 3, padding=1),
+            nn.GELU(),
+            nn.Conv2d(dim // 2, 1, 3, padding=1),
+            nn.Softplus(),
+        )
 
     def _restore(self, image: torch.Tensor) -> dict[str, torch.Tensor]:
         prompt, noise_map = self.degradation(image)
@@ -173,12 +206,12 @@ class DAFRestormerSR(nn.Module):
 
         clean_lr = image + self.clean_lr_head(d1)
         hr_features = self.sr(d1)
-        base = F.interpolate(clean_lr, scale_factor=2, mode="bicubic", align_corners=False)
+        base = F.interpolate(clean_lr, scale_factor=2, mode="bicubic", align_corners=False, antialias=True)
         prediction = base + self.output(hr_features)
         return {
             "prediction": prediction,
             "clean_lr": clean_lr,
-            "uncertainty": self.uncertainty(hr_features),
+            "uncertainty": self.uncertainty(d1),
             "noise_map": noise_map,
         }
 

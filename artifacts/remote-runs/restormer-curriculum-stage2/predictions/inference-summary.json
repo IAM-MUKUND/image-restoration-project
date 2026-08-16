@@ -1,0 +1,11 @@
+{
+  "model": "restormer",
+  "weights": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/remote-runs/restormer-curriculum-stage2/restormer/checkpoints/best.pt",
+  "input_dir": "/home/mukundvinayak/semiconductor-image-restoration/main_dataset/Test_NoisyLR/NoisyLR",
+  "output_dir": "/home/mukundvinayak/semiconductor-image-restoration/artifacts/remote-runs/restormer-curriculum-stage2/predictions",
+  "images": 400,
+  "self_ensemble_transforms": 1,
+  "seconds": 6.755718325999624,
+  "images_per_second": 59.2090997134362,
+  "device": "cuda"
+}

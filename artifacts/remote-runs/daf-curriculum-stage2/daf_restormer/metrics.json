@@ -1,0 +1,61 @@
+{
+  "status": "completed",
+  "model": "daf_restormer",
+  "notes": "Degradation-aware frequency Restormer with prompt modulation, spatial noise mapping, progressive clean-LR supervision, and uncertainty estimation.",
+  "parameters": 4172518,
+  "checkpoint": "/content/image-restoration-project/artifacts/daf-curriculum-stage2/daf_restormer/checkpoints/best.pt",
+  "checkpoint_bytes": 16810864,
+  "best_epoch": 5,
+  "training_seconds": 748.281496328,
+  "peak_vram_mib": 4991.98583984375,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.11946182840814193,
+      "learning_rate": 2.7144804065905464e-05,
+      "val_psnr_mean_db": 25.0818388402462,
+      "val_ssim_mean": 0.6036984452512115
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.09522798278679451,
+      "learning_rate": 1.9669804065905462e-05,
+      "val_psnr_mean_db": 25.941876071691514,
+      "val_ssim_mean": 0.6503628317499534
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.08745966385015183,
+      "learning_rate": 1.0430195934094536e-05,
+      "val_psnr_mean_db": 26.062343338131903,
+      "val_ssim_mean": 0.6646859888220206
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.08380203644434611,
+      "learning_rate": 2.9551959340945365e-06,
+      "val_psnr_mean_db": 26.35348090827465,
+      "val_ssim_mean": 0.6795915996655821
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0826074145320389,
+      "learning_rate": 1e-07,
+      "val_psnr_mean_db": 26.462583357095717,
+      "val_ssim_mean": 0.6830596811138093
+    }
+  ],
+  "metrics": {
+    "samples": 320,
+    "psnr_mean_db": 26.462583357095717,
+    "psnr_median_db": 26.865272521972656,
+    "psnr_worst_decile_db": 21.326792907714843,
+    "ssim_mean": 0.6830596811138093,
+    "lpips_mean": 0.3753697854699567,
+    "validation_wall_seconds": 5.18380401200011,
+    "validation_images_per_second": 61.73072887385875
+  },
+  "latency_median_ms_batch1": 39.4475212097168,
+  "latency_p90_ms_batch1": 50.087322616577154,
+  "latency_iterations": 100
+}

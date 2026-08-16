@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "input_count": 400,
+  "output_count": 400,
+  "expected_shape": [
+    256,
+    256
+  ],
+  "expected_dtype": "float32",
+  "finite": true,
+  "global_min": 0.0,
+  "global_max": 1.0,
+  "mean_of_image_means": 0.4421008310932666,
+  "within_submission_range": true,
+  "failures": []
+}
