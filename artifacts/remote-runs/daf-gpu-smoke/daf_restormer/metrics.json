@@ -4,30 +4,30 @@
   "notes": "Degradation-aware frequency Restormer with prompt modulation, spatial noise mapping, progressive clean-LR supervision, and uncertainty estimation.",
   "parameters": 4172518,
   "checkpoint": "/content/image-restoration-project/artifacts/daf-gpu-smoke/daf_restormer/checkpoints/best.pt",
-  "checkpoint_bytes": 16810608,
+  "checkpoint_bytes": 16810672,
   "best_epoch": 1,
-  "training_seconds": 27.796244193000007,
+  "training_seconds": 30.44130966199998,
   "peak_vram_mib": 2528.86962890625,
   "history": [
     {
       "epoch": 1,
-      "train_loss": 0.1225027545588091,
+      "train_loss": 0.12250736460555345,
       "learning_rate": 0.0,
-      "val_psnr_mean_db": 22.71888394653797,
-      "val_ssim_mean": 0.5376486561726779
+      "val_psnr_mean_db": 22.714635998010635,
+      "val_ssim_mean": 0.5371660536620766
     }
   ],
   "metrics": {
     "samples": 64,
-    "psnr_mean_db": 22.71888394653797,
-    "psnr_median_db": 23.072131156921387,
-    "psnr_worst_decile_db": 19.214122009277343,
-    "ssim_mean": 0.5376486561726779,
+    "psnr_mean_db": 22.714635998010635,
+    "psnr_median_db": 23.069619178771973,
+    "psnr_worst_decile_db": 19.212238311767578,
+    "ssim_mean": 0.5371660536620766,
     "lpips_mean": null,
-    "validation_wall_seconds": 0.9763015569999993,
-    "validation_images_per_second": 65.55351626874446
+    "validation_wall_seconds": 0.9558862129999852,
+    "validation_images_per_second": 66.95357578088742
   },
-  "latency_median_ms_batch1": 31.10558319091797,
-  "latency_p90_ms_batch1": 34.412574768066406,
+  "latency_median_ms_batch1": 34.14591979980469,
+  "latency_p90_ms_batch1": 47.04090728759767,
   "latency_iterations": 100
 }

@@ -11,9 +11,9 @@
   "finite": true,
   "global_min": 0.0,
   "global_max": 1.0,
-  "mean_of_image_means": 0.443017781637609,
+  "mean_of_image_means": 0.44309141468256713,
   "within_submission_range": true,
   "failures": [],
-  "checkpoint_sha256": "0ee70a5d4698444e5a47c6f85382f55c27d6dd6fa0af8e2853b25954e90c13a3",
-  "input_archive_sha256": "cd65dde33c9a44c899d0906d7d71daf23bd93c4565b0225ef4226e3285a0d9de"
+  "checkpoint_sha256": "3ba49569f9971bdf07a7311816fc7b81cb36935fc598cf29459dbc77143cf070",
+  "input_archive_sha256": "b95c1f7235a135630215f658105da7ef4d68e81a7ed24b0d86c5b2f9cdf24aad"
 }
