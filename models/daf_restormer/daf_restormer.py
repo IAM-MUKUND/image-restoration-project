@@ -154,7 +154,7 @@ class DAFRestormerSR(nn.Module):
         self.degradation = DegradationEncoder(prompt_dim=prompt_dim)
         self.embed = nn.Conv2d(2, dim, 3, padding=1, bias=False)
         self.noise_inject1 = nn.Conv2d(1, dim, 3, padding=1, bias=False)
-        self.enc1 = PromptedStage(dim, blocks_per_level[0], 2, prompt_dim)
+        self.enc1 = PromptedStage(dim, blocks_per_level[0], 1, prompt_dim)
 
         self.down1 = Downsample(dim)
         self.noise_inject2 = nn.Conv2d(1, dim * 2, 3, padding=1, bias=False)
@@ -170,7 +170,7 @@ class DAFRestormerSR(nn.Module):
         self.dec2 = PromptedStage(dim * 2, blocks_per_level[1], 2, prompt_dim)
         self.up1 = Upsample(dim * 2)
         self.reduce1 = nn.Conv2d(dim * 2, dim, 1, bias=False)
-        self.dec1 = PromptedStage(dim, blocks_per_level[0], 2, prompt_dim)
+        self.dec1 = PromptedStage(dim, blocks_per_level[0], 1, prompt_dim)
 
         self.clean_lr_head = nn.Conv2d(dim, 1, 3, padding=1)
         _sr_conv = nn.Conv2d(dim, dim * 4, 3, padding=1)

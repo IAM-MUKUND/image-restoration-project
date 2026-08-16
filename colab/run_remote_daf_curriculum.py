@@ -1,0 +1,97 @@
+"""Run 2-stage patch-to-full curriculum fine-tuning on 4.17M DAF-Restormer (1-view)."""
+
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+import tarfile
+from pathlib import Path
+
+PROJECT = Path("/content/image-restoration-project")
+DATA_ROOT = Path("/content/kla-data/extracted/train")
+
+STAGE1_OUTPUT = PROJECT / "artifacts" / "daf-curriculum-stage1"
+STAGE2_OUTPUT = PROJECT / "artifacts" / "daf-curriculum-stage2"
+ARCHIVE = Path("/content/kla-daf-curriculum.tar.gz")
+
+# Base pre-trained DAF-Restormer checkpoint — uploaded directly to /content/
+BASE_CHECKPOINT = Path("/content/daf-restormer-perceptual-epoch1.pt")
+
+
+def main() -> None:
+    environment = os.environ.copy()
+    environment["PYTHONPATH"] = str(PROJECT)
+
+    print("=== STARTING STAGE 1: DAF ICNR Patch Curriculum (64x64 patches, 70/30 synthetic mix, LR=2e-4) ===")
+    stage1_cmd = [
+        sys.executable,
+        "train.py",
+        "--model",
+        "daf_restormer",
+        "--data-root",
+        str(DATA_ROOT),
+        "--output-dir",
+        str(STAGE1_OUTPUT),
+        "--epochs",
+        "15",
+        "--batch-size",
+        "16",
+        "--learning-rate",
+        "2e-4",
+        "--synthetic-probability",
+        "0.30",
+        "--crop-size",
+        "64",
+        "--ssim-weight",
+        "0.25",
+        "--gradient-weight",
+        "0.05",
+        "--eta-min",
+        "1e-7",
+    ]
+    print("Training DAF-Restormer with stabilized ICNR architecture.")
+    subprocess.check_call(stage1_cmd, cwd=PROJECT, env=environment)
+
+    stage1_checkpoint = STAGE1_OUTPUT / "daf_restormer" / "checkpoints" / "best.pt"
+    if not stage1_checkpoint.exists():
+        raise FileNotFoundError(f"Stage 1 checkpoint not found at {stage1_checkpoint}")
+
+    print("\n=== STARTING STAGE 2: DAF Full-Image Fine-Tuning (Full 128x128, LR=3e-5, Clean Loss) ===")
+    stage2_cmd = [
+        sys.executable,
+        "train.py",
+        "--model",
+        "daf_restormer",
+        "--data-root",
+        str(DATA_ROOT),
+        "--output-dir",
+        str(STAGE2_OUTPUT),
+        "--epochs",
+        "5",
+        "--batch-size",
+        "8",
+        "--learning-rate",
+        "3e-5",
+        "--synthetic-probability",
+        "0.30",
+        "--ssim-weight",
+        "0.25",
+        "--gradient-weight",
+        "0.05",
+        "--eta-min",
+        "1e-7",
+        "--resume-checkpoint",
+        str(stage1_checkpoint),
+    ]
+
+    subprocess.check_call(stage2_cmd, cwd=PROJECT, env=environment)
+
+    with tarfile.open(ARCHIVE, "w:gz") as archive:
+        archive.add(STAGE2_OUTPUT, arcname="daf-curriculum-stage2")
+
+    print(f"\nDAF_CURRICULUM_COMPLETE archive={ARCHIVE} bytes={ARCHIVE.stat().st_size}")
+
+
+if __name__ == "__main__":
+    main()
