@@ -20,7 +20,7 @@ def test_daf_restormer_auxiliary_outputs_and_gradients():
     outputs = model.forward_with_aux(sample)
     assert outputs["prediction"].shape == (1, 1, 64, 64)
     assert outputs["clean_lr"].shape == sample.shape
-    assert outputs["uncertainty"].shape == (1, 1, 64, 64)
+    assert outputs["uncertainty"].shape == sample.shape
     assert outputs["noise_map"].shape == sample.shape
     assert torch.all(outputs["uncertainty"] >= 0)
     assert torch.all((outputs["noise_map"] >= 0) & (outputs["noise_map"] <= 1))

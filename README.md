@@ -35,19 +35,20 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Run the standalone KLA evaluator with exactly the required input and output
-directory arguments:
+Run the standalone KLA evaluator using the required entry script format:
 
 ```bash
-python infer.py --input /path/to/Test_NoisyLR --output /path/to/restored_test
+python run.py /path/to/Test_NoisyLR /path/to/restored_test
 ```
 
-`infer.py` automatically loads the selected checkpoint and uses the verified
-eight-view accuracy mode. It preserves every `.npy` filename and writes a
-`float32` array of shape `[256, 256]` for every `[128, 128]` grayscale input.
-Use `--self-ensemble 1` only when latency matters more than leaderboard
-accuracy. An optional `--weights` argument can evaluate another compatible
-checkpoint.
+`run.py` automatically loads the included `models/checkpoints/best.pt` model weights and runs in the verified eight-view geometric self-ensemble accuracy mode on CUDA GPU. It reads all `.npy` input files, creates the output directory if missing, preserves every input filename, and outputs a sanitized `float32` array of target shape `[256, 256]` strictly bounded within `[0, 1]` with no `NaN` or `Inf` values.
+
+Flags and positional arguments:
+- `python run.py <input-dir> <output-dir>` (Positional execution required for hackathon submission)
+- `python run.py --input /path/to/input --output /path/to/output` (Supported for backward compatibility)
+- `--self-ensemble 1` (Use 1 for ultra-low-latency inference, default is 8 for maximum competition accuracy)
+- `--weights /path/to/weights.pt` (Optional path to custom weight checkpoint)
+
 
 Submission-ready outputs generated from all 400 official test inputs are in
 [`artifacts/remote-runs/daf-final-submission/predictions`](artifacts/remote-runs/daf-final-submission/predictions/),

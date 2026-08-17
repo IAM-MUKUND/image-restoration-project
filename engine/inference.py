@@ -11,15 +11,39 @@ from models import build_model
 from models.self_ensemble import GeometricSelfEnsemble
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+DEFAULT_WEIGHT_CANDIDATES = [
+    PROJECT_ROOT / "models" / "checkpoints" / "best.pt",
+    PROJECT_ROOT / "models" / "checkpoints" / "daf-restormer-perceptual-epoch1.pt",
+    PROJECT_ROOT / "artifacts" / "remote-runs" / "daf-final-submission" / "checkpoints" / "daf-restormer-perceptual-epoch1.pt",
+]
+
+
+def resolve_weights_path(weights: Path | str | None = None) -> Path:
+    if weights is not None:
+        p = Path(weights)
+        if p.is_file():
+            return p
+    for candidate in DEFAULT_WEIGHT_CANDIDATES:
+        if candidate.is_file():
+            return candidate
+    raise FileNotFoundError("No valid model weights checkpoint found.")
+
+
 @torch.inference_mode()
 def restore_directory(
-    input_dir: Path,
-    output_dir: Path,
-    weights: Path,
+    input_dir: Path | str,
+    output_dir: Path | str,
+    weights: Path | str | None = None,
     batch_size: int = 16,
-    self_ensemble_transforms: int = 1,
+    self_ensemble_transforms: int = 8,
 ) -> dict[str, object]:
-    checkpoint = torch.load(weights, map_location="cpu", weights_only=False)
+    input_dir = Path(input_dir)
+    output_dir = Path(output_dir)
+    weights_path = resolve_weights_path(weights)
+
+    checkpoint = torch.load(weights_path, map_location="cpu", weights_only=False)
     model_name = checkpoint["model_name"]
     model = build_model(model_name)
     model.load_state_dict(checkpoint["model_state_dict"])
@@ -41,13 +65,15 @@ def restore_directory(
             prediction = model(tensor)
         prediction = prediction.float().clamp(0.0, 1.0).cpu().numpy()[:, 0]
         for path, array in zip(batch_files, prediction):
-            np.save(output_dir / path.name, array.astype(np.float32))
+            array = np.nan_to_num(array, nan=0.0, posinf=1.0, neginf=0.0)
+            array = np.clip(array, 0.0, 1.0).astype(np.float32, copy=False)
+            np.save(output_dir / path.name, array)
     if device.type == "cuda":
         torch.cuda.synchronize(device)
     elapsed = time.perf_counter() - started
     summary = {
         "model": model_name,
-        "weights": str(weights.resolve()),
+        "weights": str(weights_path.resolve()),
         "input_dir": str(input_dir.resolve()),
         "output_dir": str(output_dir.resolve()),
         "images": len(files),
@@ -58,3 +84,4 @@ def restore_directory(
     }
     (output_dir / "inference-summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary
+
